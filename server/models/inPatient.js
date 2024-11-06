@@ -17,10 +17,6 @@ const inpatientSchema = new mongoose.Schema(
             type: Date,
             default: Date.now, // Admission date (defaults to current time)
         },
-        dischargeDate: {
-            type: Date,
-            required: false, // This will be filled when the patient is discharged
-        },
         roomNumber: {
             type: String,
             required: true, // Room assigned for the patient
@@ -46,10 +42,7 @@ const inpatientSchema = new mongoose.Schema(
             type: String,
             required: false, // Additional notes or instructions for the care team
         },
-        followUpDate: {
-            type: Date,
-            required: false, // Optional follow-up date after discharge
-        },
+
         createdBy: {
             type: Schema.Types.ObjectId,
             ref: "User", // Reference to the hospital admin or staff who created the admission record
@@ -60,7 +53,7 @@ const inpatientSchema = new mongoose.Schema(
         timestamps: true,
         toObject: { virtuals: true },
         toJSON: { virtuals: true },
-      }
+    }
 );
 
 // Create an index for faster queries based on patientId and status

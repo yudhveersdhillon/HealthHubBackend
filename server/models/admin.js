@@ -10,47 +10,49 @@ const adminSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        address: {
+            type: String,
+            required: true,
+        },
+        contactNumber: {
+            type: String,
+            required: true,
+        },
         email: {
             type: String,
             required: true,
-            unique: true, // Ensures uniqueness of email addresses
+            unique: true,
+        },
+        website: {
+            type: String,
+        },
+        totalBeds: {
+            type: Number,
+            required: true,
+        },
+        departments: [{
+            type: String, // You can list departments like Cardiology, Orthopedics, etc.
+        }],
+        status: {
+            type: Number,
+            default: 1, // 1 = active, 0 = inactive
         },
         password: {
             type: String,
-            required: true,
+            required: true, // Password is now part of the schema
         },
-        phone: {
-            type: String,
-        },
-        status: {
-            type: Number,
-            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
-            index: true,
-        },
-        profileImage: {
-            type: String,
-            default: null
-        },
-        otp: {
-            type: Number,
-            default: 0
-        },
-        storeId: [
+        doctors: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Store",
-                default: null,
+                ref: "Doctor", // Assuming a Doctor model exists
             },
         ],
-        status: {
-            type: Number,
-            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
-        },
-        role: {
-            type: String,
-            enum: ["admin", "manager"],
-            default: "admin",
-        },
+        staff: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Staff", // Assuming a Staff model exists
+            },
+        ],
     },
     {
         timestamps: true,

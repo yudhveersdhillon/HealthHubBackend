@@ -1,12 +1,12 @@
-const service = require("../services/managerService");
+const service = require("../services/doctorService"); // Update to point to the doctor service
 const CONFIG = require("../../config/appConfig");
 
-let managerService = new service();
+let doctorService = new service();
 
-class managerController {
+class doctorController {
   login(req, res) {
-    managerService
-      .loginManager(req, res)
+    doctorService
+      .loginDoctor(req, res) // Update to loginDoctor
       .then((result) => {
         return res.success(result.code, "", result.data);
       })
@@ -16,8 +16,8 @@ class managerController {
   }
 
   register(req, res) {
-    managerService
-      .registerManager(req, res)
+    doctorService
+      .registerDoctor(req, res) // Update to registerDoctor
       .then((result) => {
         return res.success(result.code, "", result.data);
       })
@@ -25,8 +25,6 @@ class managerController {
         return res.reject(error.code, error.message);
       });
   }
-
-
 }
 
-module.exports = managerController;
+module.exports = doctorController;

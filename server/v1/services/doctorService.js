@@ -33,7 +33,7 @@ class managerService {
       })
         .select("+password")
         .then(async (user) => {
-          if(user && user.role == 'admin'){
+          if (user && user.role == 'admin') {
             return reject({
               code: CONFIG.ERROR_CODE_FORBIDDEN,
               message: CONFIG.EMAIL_NOT_CORRECT,
@@ -75,7 +75,7 @@ class managerService {
     return new Promise(async function (resolve, reject) {
       try {
         console.log(req.body, "bodyyyyy");
-        const adminEmail =  req.body.email.toLowerCase();
+        const adminEmail = req.body.email.toLowerCase();
         const storeName = req.body.storeName;
         const checkAdminEmail = await Admin.findOne({ email: adminEmail, status: { $ne: 2 } });
         if (checkAdminEmail) {
@@ -96,7 +96,7 @@ class managerService {
             message: CONFIG.ERROR_CODE_SAME_STORE,
           });
         }
-        
+
         var StoreData = {
           storeName: req.body.storeName,
           address: req.body.address,
@@ -196,7 +196,7 @@ class managerService {
   }
 
 
-  
+
 
 }
 

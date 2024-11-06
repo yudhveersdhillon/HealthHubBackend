@@ -1,0 +1,260 @@
+require("dotenv").config();
+const jwtUtil = require("../../utils/JwtUtils");
+const CONFIG = require("../../config/appConfig");
+const Util = require("../../utils/commonUtils");
+const mongoose = require("mongoose");
+const path = require("path");
+const User = require("../../models/user");
+const Manager = require("../../models/manager");
+const Store = require("../../models/store");
+const AgeLimit = require("../../models/agelimit");
+const Admin = require("../../models/admin");
+const Settings = require("../../models/settings");
+const onboarding = require("../../models/onboarding");
+const TermsAndConditions = require("../../models/termsAndConditions");
+const fs = require("fs");
+const jwt = require("jsonwebtoken");
+const ValidateUser = require("../../models/userValidate");
+const { validate } = require("../../models/userVisit");
+const nodemailer = require("nodemailer");
+const bcrypt = require('bcrypt');
+const ObjectId = require("mongoose").Types.ObjectId;
+
+class userService {
+  // User Sign Up
+  userSignUp(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        let body = req.body;
+        if (body.email && !Util.isValidEmail(body.email))
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ERR_INVALID_EMAIL,
+          });
+        else if (body.password && !Util.isValidPassword(body.password))
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ERR_INVALID_PASSWORD,
+          });
+        const existingUser = await User.findOne({
+          email: body.email.toLowerCase(),
+          status: { $ne: 2 },
+        });
+        if (existingUser) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.EMAIL_ALREADY_EXISTS,
+          });
+        }
+        let newUser = new User(body);
+        newUser.signupType = "emailType";
+        newUser.password = await newUser.setPassword(body.password);
+
+        newUser
+          .save()
+          .then(async (result) => {
+            // let validateUser = new ValidateUser({
+            //   userId: result._id,
+            //   uuid: result.uuid,
+            //   deviceId: result.deviceId,
+            // });
+            // await validateUser.save();
+            // const token = jwt.sign(result.toObject(), CONFIG.JWT_ENCRYPTION);
+            //result.token = token;
+            var data = JSON.parse(JSON.stringify(result));
+            delete data.password;
+            resolve({
+              code: CONFIG.SUCCESS_CODE,
+              message: CONFIG.USER_CREATION,
+              data: data,
+            });
+          })
+          .catch((error) => {
+            reject({
+              code: CONFIG.ERROR_CODE,
+              message: error.message,
+            });
+          });
+      } catch (error) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+  userLogin(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        var body = req.body;
+        if (!body.password)
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ERR_MISSING_PASSWORD,
+          });
+        else if (!body.email)
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ERR_MISSING_EMAIL,
+          });
+        User.findOne({
+          email: body.email.toLowerCase(),
+          status: { $ne: 2 },
+        })
+          .select("+password")
+          .then(async (user) => {
+            if (!user)
+              return reject({
+                code: CONFIG.ERROR_CODE_FORBIDDEN,
+                message: CONFIG.EMAIL_NOT_CORRECT,
+              });
+            if (user.signupType == "mitType") {
+              return reject({
+                code: CONFIG.ERROR_CODE,
+                message: CONFIG.PASS_NOT_REQUIRED,
+              });
+            }
+
+            const iscorrect = await user.comparePassword(body.password);
+            if (!iscorrect)
+              return reject({
+                code: CONFIG.ERROR_CODE_FORBIDDEN,
+                message: CONFIG.PASS_NOT_CORRECT,
+              });
+
+            if (user.deviceId != body.deviceId && user.logoutStatus == 1) {
+              return reject({
+                code: CONFIG.SUCCESS_CODE,
+                message: CONFIG.ALREADY_UPDATED_DEVICE,
+              });
+            }
+
+            const updatelogoutStatus = await User.findOneAndUpdate(
+              { _id: user._id },
+              { logoutStatus: 1, deviceId: body.deviceId },
+              { new: true }
+            );
+            var data = JSON.parse(JSON.stringify(user));
+            if (data.deviceId) {
+              data.deviceId = body.deviceId;
+            }
+            if (data.age != 0) {
+              let validateUser = new ValidateUser({
+                userId: data._id,
+                uuid: data.uuid,
+                deviceId: data.deviceId,
+              });
+              await validateUser.save();
+              let token = jwtUtil.issue({
+                data,
+              });
+              data.token = token;
+            }
+            delete data.password;
+            resolve({
+              code: CONFIG.SUCCESS_CODE,
+              message: CONFIG.USER_SUCCESSFUL_LOGIN,
+              data: data,
+            });
+          })
+          .catch((error) => {
+            reject({
+              code: CONFIG.ERROR_CODE,
+              message: error.message,
+            });
+          });
+      } catch (error) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+  updateUserDeatails(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        var body = req.body;
+        const uuid = body?.uuid;
+        const checkuuid = await User.findOne({
+          uuid: uuid,
+          status: { $ne: 2 },
+        });
+        if (checkuuid) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.SAME_UUID_EXISTS,
+          });
+        }
+        const updateDetails = await User.findOneAndUpdate(
+          {
+            email: body.email.toLowerCase(),
+            status: CONFIG.ACTIVE_STATUS,
+          },
+          { $set: body },
+          { new: true }
+        );
+        // let validateUser = new ValidateUser({
+        //   userId: updateDetails._id,
+        //   uuid: updateDetails.uuid,
+        //   deviceId: updateDetails.deviceId,
+        // });
+        // await validateUser.save();
+        var data = JSON.parse(JSON.stringify(updateDetails));
+
+        let token = jwtUtil.issue({
+          data,
+        });
+        // console.log();
+        data.token = token;
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.USER_SUCCESSFUL_UPDATE,
+          data: data,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+  userLogout(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        let email = req.body.email;
+        let deviceId = req.body.deviceId;
+        const existingUser = await User.findOneAndUpdate(
+          { email: email, deviceId: deviceId, status: 1 },
+          { logoutStatus: 0 },
+          { new: true }
+        );
+        if (!existingUser) {
+          resolve({
+            code: CONFIG.SUCCESS_CODE,
+            message: CONFIG.LOGOUT_USER,
+          });
+        }
+
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.USER_LOGGED_OUT_SUCCESSFULLY,
+        });
+      } catch (error) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+}
+
+module.exports = userService;

@@ -1,0 +1,6 @@
+APIPORT=3000
+
+#-------DB----------
+DBHOST=localhost
+DBPORT=27017
+DBNAME=ageproof

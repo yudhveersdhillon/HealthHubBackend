@@ -3,7 +3,7 @@ var route = express.Router();
 
 var userCheck = require("../../auth/userjwtAuthorized");
 
-const userController = require("../controllers/userController");
+const userController = require("../controllers/staffController");
 
 let userRepo = new userController();
 

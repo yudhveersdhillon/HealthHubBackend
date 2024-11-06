@@ -88,7 +88,7 @@ route.post("/callback", function (req, res) {
 });
 
 route.use("/admin", require("./adminRoutes"));
-route.use("/manager", require("./managerRoutes"));
-route.use("/user", require("./userRoutes"));
+route.use("/manager", require("./doctorRoutes"));
+route.use("/user", require("./staffRoutes"));
 
 module.exports = route;

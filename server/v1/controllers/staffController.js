@@ -1,4 +1,4 @@
-const service = require("../services/userServices");
+const service = require("../services/staffServices");
 const CONFIG = require("../../config/appConfig");
 
 let userService = new service();

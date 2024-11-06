@@ -4,7 +4,7 @@ const { managerAndStoreupload } = require("../../utils/commonUtils");
 
 var authCheck = require("../../auth/jwtAuthorized");
 
-const managerController = require("../controllers/managerController");
+const managerController = require("../controllers/doctorController");
 let managerRepo = new managerController();
 
 route.post("/login", managerRepo.login);

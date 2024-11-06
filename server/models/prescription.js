@@ -62,5 +62,4 @@ const prescriptionSchema = new mongoose.Schema(
     }
 );
 
-// Creating the model for the Prescription
 module.exports = mongoose.model("Prescription", prescriptionSchema);

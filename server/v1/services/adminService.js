@@ -5,7 +5,7 @@ const CONFIG = require("../../config/appConfig");
 const Util = require("../../utils/commonUtils");
 const moment = require("moment");
 const Admin = require("../../models/admin");
-const User = require("../../models/user");
+const User = require("../../models/staff");
 
 const mongoose = require("mongoose");
 const fs = require("fs");

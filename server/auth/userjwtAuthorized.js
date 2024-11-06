@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/staff");
 const CONFIG = require("../config/appConfig");
 const jwtUtil = require("../utils/JwtUtils");
 

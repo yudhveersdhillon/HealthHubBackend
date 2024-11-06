@@ -1,7 +1,7 @@
 var express = require("express");
 var jwt = require("jsonwebtoken");
 var router = express();
-var User = require("../../models/user");
+var User = require("../../models/staff");
 
 const CONFIG = require("../../config/appConfig");
 

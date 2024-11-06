@@ -24,8 +24,10 @@ const appointmentSchema = new mongoose.Schema(
         },
     },
     {
-        timestamps: true,  // Automatically add createdAt and updatedAt
-    }
+        timestamps: true,
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true },
+      }
 );
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

@@ -4,21 +4,14 @@ const jwtUtil = require("../../utils/JwtUtils");
 const CONFIG = require("../../config/appConfig");
 const Util = require("../../utils/commonUtils");
 const moment = require("moment");
-const TermsAndConditions = require("../../models/termsAndConditions");
-const Settings = require("../../models/settings");
-const Manager = require("../../models/manager");
-const Agelimit = require("../../models/agelimit");
-const Store = require("../../models/store");
 const Admin = require("../../models/admin");
 const User = require("../../models/user");
-const UserVisits = require("../../models/userVisit");
-const userVisit = require("../../models/userVisit");
-const onboarding = require("../../models/onboarding");
+
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const qrCode = require("qrcode");
+
 
 class adminService {
   adminRegister(req, res) {

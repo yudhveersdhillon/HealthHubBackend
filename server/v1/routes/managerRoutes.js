@@ -13,9 +13,6 @@ route.post("/register", managerAndStoreupload.fields([
     { name: "logo", maxCount: 1 },
     { name: "profileImage", maxCount: 1 },
 ]), managerRepo.register);
-route.post("/getusers", authCheck, managerRepo.getStoreUsers);
-route.post("/get/nearbystores/data", authCheck, managerRepo.getNearByStoreData);
-route.get("/get/stores/data/:managerId", authCheck, managerRepo.getManagerStoresData);
-route.get("/get/uservisits/data/:storeId", authCheck, managerRepo.getStoreUserVisitsData);
+
 
 module.exports = route;

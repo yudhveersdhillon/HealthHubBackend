@@ -6,8 +6,8 @@ var url = `mongodb://${host}:${port}/${dbName}`;
 
 mongoose
   .connect(url, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    // useNewUrlParser: true,
   })
   .then(() => {
     console.log("Connected to MongoDB");

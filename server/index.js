@@ -7,8 +7,6 @@ require("./connection/connect");
 const CONFIG = require("./config/appConfig");
 const response = require("./responses");
 const v1 = require("./v1/routes");
-var assetlinks = require("../assetlinks.json");
-var appleappassociation = require("../apple-app-site-association.json");
 
 var app = express();
 

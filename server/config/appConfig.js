@@ -131,7 +131,8 @@ let appConfig = {
   SUCCESS_CODE_DOCTOR_RETRIEVAL: "Doctor Retrieved Successfully",
   NOT_FOUND_DOCTOR: "Not Found doctor",
   SUCCESS_DOCTOR_UPDATE: "Doctor updated Successfully",
-  SUCCESS_CODE_DOCTOR_DELETED: "Doctor deleted Successfully"
+  SUCCESS_CODE_DOCTOR_DELETED: "Doctor deleted Successfully",
+  SUCCESS_DOCTOR_CREATION:"Doctor created Successfully"
 };
 
 module.exports = appConfig;

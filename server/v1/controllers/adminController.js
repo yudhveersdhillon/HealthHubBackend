@@ -122,6 +122,62 @@ class adminController {
         return res.reject(error.code, error.message);
       });
   }
+
+  adminStaffRegister
+    (req, res) {
+    adminService
+      .adminStaffRegister(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  getAllStaffList(req, res) {
+    adminService
+      .getAllStaffList(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  getStaffbyId(req, res) {
+    adminService
+      .getStaffbyId(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  updateStaff(req, res) {
+    adminService
+      .updateStaff(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  deleteStaff(req, res) {
+    adminService
+      .deleteStaff(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
 }
 
 module.exports = adminController;

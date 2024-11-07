@@ -36,4 +36,19 @@ route.put(
 route.delete("/doctor/delete/:id", authCheck, adminRepo.deleteDoctor);
 
 
+//Staff CRUD
+
+
+route.post("/staff/register", uploadAdminImage.single("profileImage"), adminRepo.adminStaffRegister);
+route.get("/staff/list", authCheck, adminRepo.getAllStaffList);
+route.get("/staff/list/:id", authCheck, adminRepo.getStaffbyId);
+route.put(
+    "/staff/update/:id",
+    authCheck,
+    uploadAdminImage.single("profileImage"),
+    adminRepo.updateStaff
+);
+route.delete("/staff/delete/:id", authCheck, adminRepo.deleteStaff);
+
+
 module.exports = route;

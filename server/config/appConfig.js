@@ -132,7 +132,16 @@ let appConfig = {
   NOT_FOUND_DOCTOR: "Not Found doctor",
   SUCCESS_DOCTOR_UPDATE: "Doctor updated Successfully",
   SUCCESS_CODE_DOCTOR_DELETED: "Doctor deleted Successfully",
-  SUCCESS_DOCTOR_CREATION:"Doctor created Successfully"
+  SUCCESS_DOCTOR_CREATION: "Doctor created Successfully",
+  SUCCESS_STAFF_CREATION: "Staff created Successfully",
+  SUCCESS_STAFF_LIST: "Staff list Retrieved Successfully",
+  STAFF_ID_MISSED: "Staff Id Missing",
+  STAFF_NOT_FOUND: "Staff not found",
+  SUCCESS_CODE_STAFF_RETRIEVAL: "Staff Retrieved Successfully",
+  NOT_FOUND_STAFF: "Not found staff",
+  SUCCESS_STAFF_UPDATE: "Staff updated Successfully",
+  SUCCESS_CODE_STAFF_DELETED: "Staff deleted Successfully"
+
 };
 
 module.exports = appConfig;

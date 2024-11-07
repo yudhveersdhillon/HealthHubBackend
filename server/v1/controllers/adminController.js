@@ -61,7 +61,7 @@ class adminController {
     adminService
       .updateUser(req, res)
       .then((result) => {
-        return res.success(result.code, "", result.data);
+        return res.success(result.code, result.message, result.data);
       })
       .catch((error) => {
         return res.reject(error.code, error.message);
@@ -69,6 +69,59 @@ class adminController {
   }
 
 
+  adminDoctorRegister(req, res) {
+    adminService
+      .adminDoctorRegister(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  getAllDoctorList(req, res) {
+    adminService
+      .getAllDoctorList(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  getDoctorbyId(req, res) {
+    adminService
+      .getDoctorbyId(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  updateDoctor(req, res) {
+    adminService
+      .updateDoctor(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  deleteDoctor(req, res) {
+    adminService
+      .deleteDoctor(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
 }
 
 module.exports = adminController;

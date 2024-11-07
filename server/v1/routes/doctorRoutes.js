@@ -4,15 +4,17 @@ const { managerAndStoreupload } = require("../../utils/commonUtils");
 
 var authCheck = require("../../auth/jwtAuthorized");
 
-const managerController = require("../controllers/doctorController");
-let managerRepo = new managerController();
+const doctorController = require("../controllers/doctorController");
+let doctorRepo = new doctorController();
 
-route.post("/login", managerRepo.login);
-route.post("/register", managerAndStoreupload.fields([
-    { name: "image", maxCount: 1 },
-    { name: "logo", maxCount: 1 },
-    { name: "profileImage", maxCount: 1 },
-]), managerRepo.register);
+//route.post("/doctor/login", doctorRepo.adminDoctorlogin);
+
+// route.post("/login", managerRepo.login);
+// route.post("/register", managerAndStoreupload.fields([
+//     { name: "image", maxCount: 1 },
+//     { name: "logo", maxCount: 1 },
+//     { name: "profileImage", maxCount: 1 },
+// ]), managerRepo.register);
 
 
 module.exports = route;

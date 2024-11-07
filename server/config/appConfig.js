@@ -124,7 +124,14 @@ let appConfig = {
   SUCCESS_VERIFICATION_CREATED: "Verification session created successfully",
   SUCCESS_CALLBACK_CREATED: "Callback created Successfully",
   ADMIN_SUCCESSFUL_LOGIN: "Admin login Successfully",
-  SUCCESS_ADMIN_UPDATE:"Admin Updated Successfully"
+  SUCCESS_ADMIN_UPDATE: "Admin Updated Successfully",
+  SUCCESS_DOCTOR_LIST: "Doctor list Retrieved Successfully",
+  DOCTOR_ID_MISSED: "Doctor Id missed",
+  DOCTOR_NOT_FOUND: "Doctor not found",
+  SUCCESS_CODE_DOCTOR_RETRIEVAL: "Doctor Retrieved Successfully",
+  NOT_FOUND_DOCTOR: "Not Found doctor",
+  SUCCESS_DOCTOR_UPDATE: "Doctor updated Successfully",
+  SUCCESS_CODE_DOCTOR_DELETED: "Doctor deleted Successfully"
 };
 
 module.exports = appConfig;

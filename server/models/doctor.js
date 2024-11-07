@@ -8,38 +8,33 @@ const doctorSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      lowercase: true,
-      required: true,
-      unique: true,  // Email should be unique
-      index: true,
+
     },
     phone: {
       type: String,
-      required: true, // Phone number of the doctor
     },
     specialty: {
       type: String,
-      required: true, // Doctor's specialty (e.g., Cardiology, Orthopedics)
+      // Doctor's specialty (e.g., Cardiology, Orthopedics)
     },
     licenseNumber: {
       type: String,
-      required: true, // Medical license number of the doctor
+      // Medical license number of the doctor
     },
     yearsOfExperience: {
       type: Number,
-      required: true, // Years of experience the doctor has
+      // Years of experience the doctor has
     },
     hospital: {
       type: String,
-      required: true, // The hospital where the doctor works
+      // The hospital where the doctor works
     },
     department: {
       type: String,
-      required: true, // The department in the hospital (e.g., Surgery, Pediatrics)
+      // The department in the hospital (e.g., Surgery, Pediatrics)
     },
     status: {
       type: Number,
@@ -48,11 +43,11 @@ const doctorSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: true, // Address of the doctor (where they are based)
+      // Address of the doctor (where they are based)
     },
     password: {
       type: String,
-      select: false, // Password is not returned in queries by default
+      // Password is not returned in queries by default
     },
   },
   {

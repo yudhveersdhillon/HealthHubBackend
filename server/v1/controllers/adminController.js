@@ -178,6 +178,36 @@ class adminController {
         return res.reject(error.code, error.message);
       });
   }
+  sendEmailForgotPasswordforAdmin(req, res) {
+    adminService
+      .sendEmailForgotPasswordforAdmin(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  verifyEmailOtpforAdmin(req, res) {
+    adminService
+      .verifyEmailOtpforAdmin(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  updatePasswordforAdminEmail(req, res) {
+    adminService
+      .updatePasswordforAdminEmail(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
 }
 
 module.exports = adminController;

@@ -51,5 +51,11 @@ route.put(
 route.delete("/staff/delete/:id", authCheck, adminRepo.deleteStaff);
 
 
+//Forgot Password
+
+route.post('/forgotpassword/email', adminRepo.sendEmailForgotPasswordforAdmin);
+route.post('/forgotpassword/verifyotp', adminRepo.verifyEmailOtpforAdmin);
+route.post('/update/password/:id', adminRepo.updatePasswordforAdminEmail);
+
 
 module.exports = route;

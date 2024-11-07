@@ -8,7 +8,6 @@ const adminSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true,
         },
         address: {
             type: String,
@@ -16,11 +15,9 @@ const adminSchema = new mongoose.Schema(
         },
         contactNumber: {
             type: String,
-            required: true,
         },
         email: {
             type: String,
-            required: true,
             unique: true,
         },
         website: {
@@ -28,7 +25,6 @@ const adminSchema = new mongoose.Schema(
         },
         totalBeds: {
             type: Number,
-            required: true,
         },
         departments: [{
             type: String, // You can list departments like Cardiology, Orthopedics, etc.
@@ -39,7 +35,6 @@ const adminSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: true, // Password is now part of the schema
         },
         doctors: [
             {

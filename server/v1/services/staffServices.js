@@ -113,6 +113,12 @@ class userService {
             var data = JSON.parse(JSON.stringify(user));
 
             delete data.password;
+            let token = jwtUtil.issue({
+              email: data.email,
+              _id: data._id,
+              name: data.name          
+            });
+            data.token = token;
             resolve({
               code: CONFIG.SUCCESS_CODE,
               message: CONFIG.STAFF_SUCCESSFUL_LOGIN,

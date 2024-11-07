@@ -51,4 +51,5 @@ route.put(
 route.delete("/staff/delete/:id", authCheck, adminRepo.deleteStaff);
 
 
+
 module.exports = route;

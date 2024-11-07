@@ -141,7 +141,9 @@ let appConfig = {
   SUCCESS_STAFF_UPDATE: "Staff updated Successfully",
   SUCCESS_CODE_STAFF_DELETED: "Staff deleted Successfully",
   DOCTOR_SUCCESSFUL_LOGIN: "Doctor Login Successfully",
-  STAFF_SUCCESSFUL_LOGIN: "Staff Login Successfull"
+  STAFF_SUCCESSFUL_LOGIN: "Staff Login Successfull",
+  SUCCESS_DOCTOR_PASSWORD_UPDATED: "Doctor password updated Successfully",
+  SUCCESS_STAFF_PASSWORD_UPDATED:"Staff password changed Successfully"
 
 };
 

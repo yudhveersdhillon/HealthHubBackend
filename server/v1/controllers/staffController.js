@@ -60,6 +60,38 @@ class staffController {
       });
   }
 
+  sendEmailForgotPasswordforStaff(req, res) {
+    staffService
+      .sendEmailForgotPasswordforStaff(req, res) 
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  verifyEmailOtpforStaff(req, res) {
+    staffService
+      .verifyEmailOtpforStaff(req, res) 
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  updatePasswordforStaffEmail(req, res) {
+    staffService
+      .updatePasswordforStaffEmail(req, res) 
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
 
 }
 

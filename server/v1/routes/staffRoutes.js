@@ -16,6 +16,9 @@ route.post("/login", staffRepo.Stafflogin);
 // route.post("/logout", userCheck, userRepo.userLogout);
 
 // route.get("/onboarding/data", userRepo.onboardingData);
+route.post('/forgotpassword/email', staffRepo.sendEmailForgotPasswordforStaff);
+route.post('/forgotpassword/verifyotp', staffRepo.verifyEmailOtpforStaff);
+route.post('/update/password/:id', staffRepo.updatePasswordforStaffEmail);
 
 
 

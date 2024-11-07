@@ -19,7 +19,40 @@ class doctorController {
     doctorService
       .registerDoctor(req, res) 
       .then((result) => {
-        return res.success(result.code, "", result.data);
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  
+  sendEmailForgotPasswordforDoctor(req, res) {
+    doctorService
+      .sendEmailForgotPasswordforDoctor(req, res) 
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  verifyEmailOtpforDoctor(req, res) {
+    doctorService
+      .verifyEmailOtpforDoctor(req, res) 
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  updatePasswordforDoctorEmail(req, res) {
+    doctorService
+      .updatePasswordforDoctorEmail(req, res) 
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
       })
       .catch((error) => {
         return res.reject(error.code, error.message);

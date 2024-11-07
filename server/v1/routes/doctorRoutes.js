@@ -17,4 +17,8 @@ route.post("/login", doctorRepo.Doctorlogin);
 // ]), managerRepo.register);
 
 
+route.post('/forgotpassword/email', doctorRepo.sendEmailForgotPasswordforDoctor);
+route.post('/forgotpassword/verifyotp', doctorRepo.verifyEmailOtpforDoctor);
+route.post('/update/password/:id', doctorRepo.updatePasswordforDoctorEmail);
+
 module.exports = route;

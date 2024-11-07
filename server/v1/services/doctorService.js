@@ -34,7 +34,12 @@ class doctorService {
       })
         .select("+password")
         .then(async (user) => {     
-          
+          if (!user) {
+            return reject({
+              code: CONFIG.ERROR_CODE_NOT_FOUND,
+              message: CONFIG.DOCTOR_NOT_FOUND,
+            });
+          }
           const iscorrect = await user.comparePassword(body.password);
           if (!iscorrect)
             return reject({

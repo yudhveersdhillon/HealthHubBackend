@@ -3,17 +3,17 @@ var express = require("express");
 var route = express.Router();
 
 route.get("/", function (req, res) {
-  res.status(200).send("Welcome to AgeProof v1 APIs...");
+    res.status(200).send("Welcome to AgeProof v1 APIs...");
 });
 
 route.get("/callback", function (req, res) {
-  console.log("Get - req.query:", req.query);
+    console.log("Get - req.query:", req.query);
 
-  //save the req.query and req.query.state to a global variable
-  global.mitid_login_data[req.query.state] = req.query;
-  console.log("io emitting mitid_login" + req.query.state, req.query);
-  global.io.emit("mitid_login" + req.query.state, req.query);
-  const htmlContent = `
+    //save the req.query and req.query.state to a global variable
+    global.mitid_login_data[req.query.state] = req.query;
+    console.log("io emitting mitid_login" + req.query.state, req.query);
+    global.io.emit("mitid_login" + req.query.state, req.query);
+    const htmlContent = `
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -79,16 +79,16 @@ route.get("/callback", function (req, res) {
   </body>
   </html>
 `;
-  res.status(200).send(htmlContent);
+    res.status(200).send(htmlContent);
 });
 
 route.post("/callback", function (req, res) {
-  console.log("Post", req.body);
-  res.status(200).send("please close this window and go back to app");
+    console.log("Post", req.body);
+    res.status(200).send("please close this window and go back to app");
 });
 
 route.use("/admin", require("./adminRoutes"));
-route.use("/manager", require("./doctorRoutes"));
-route.use("/user", require("./staffRoutes"));
+route.use("/doctor", require("./doctorRoutes"));
+route.use("/staff", require("./staffRoutes"));
 
 module.exports = route;

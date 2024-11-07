@@ -7,7 +7,7 @@ var authCheck = require("../../auth/jwtAuthorized");
 const doctorController = require("../controllers/doctorController");
 let doctorRepo = new doctorController();
 
-//route.post("/doctor/login", doctorRepo.adminDoctorlogin);
+route.post("/login", doctorRepo.Doctorlogin);
 
 // route.post("/login", managerRepo.login);
 // route.post("/register", managerAndStoreupload.fields([

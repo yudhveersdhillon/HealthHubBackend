@@ -4,11 +4,11 @@ const CONFIG = require("../../config/appConfig");
 let doctorService = new service();
 
 class doctorController {
-  login(req, res) {
+  Doctorlogin(req, res) {
     doctorService
-      .loginDoctor(req, res) // Update to loginDoctor
+      .Doctorlogin(req, res) 
       .then((result) => {
-        return res.success(result.code, "", result.data);
+        return res.success(result.code, result.message, result.data);
       })
       .catch((error) => {
         return res.reject(error.code, error.message);
@@ -17,7 +17,7 @@ class doctorController {
 
   register(req, res) {
     doctorService
-      .registerDoctor(req, res) // Update to registerDoctor
+      .registerDoctor(req, res) 
       .then((result) => {
         return res.success(result.code, "", result.data);
       })

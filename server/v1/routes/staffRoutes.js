@@ -3,19 +3,19 @@ var route = express.Router();
 
 var userCheck = require("../../auth/userjwtAuthorized");
 
-const userController = require("../controllers/staffController");
+const staffController = require("../controllers/staffController");
 
-let userRepo = new userController();
+let staffRepo = new staffController();
 
-route.post("/signUp", userRepo.userSignUp);
 
-route.post("/login", userRepo.userLogin);
 
-route.put("/update/details", userRepo.updateUserDeatails);
+route.post("/login", staffRepo.Stafflogin);
 
-route.post("/logout", userCheck, userRepo.userLogout);
+// route.put("/update/details", userRepo.updateUserDeatails);
 
-route.get("/onboarding/data", userRepo.onboardingData);
+// route.post("/logout", userCheck, userRepo.userLogout);
+
+// route.get("/onboarding/data", userRepo.onboardingData);
 
 
 

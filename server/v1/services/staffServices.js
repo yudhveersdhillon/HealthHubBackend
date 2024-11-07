@@ -78,7 +78,7 @@ class userService {
   }
 
 
-  userLogin(req, res) {
+  Stafflogin(req, res) {
     return new Promise(async function (resolve, reject) {
       try {
         var body = req.body;
@@ -103,12 +103,6 @@ class userService {
                 code: CONFIG.ERROR_CODE_FORBIDDEN,
                 message: CONFIG.EMAIL_NOT_CORRECT,
               });
-            if (user.signupType == "mitType") {
-              return reject({
-                code: CONFIG.ERROR_CODE,
-                message: CONFIG.PASS_NOT_REQUIRED,
-              });
-            }
 
             const iscorrect = await user.comparePassword(body.password);
             if (!iscorrect)
@@ -116,39 +110,12 @@ class userService {
                 code: CONFIG.ERROR_CODE_FORBIDDEN,
                 message: CONFIG.PASS_NOT_CORRECT,
               });
-
-            if (user.deviceId != body.deviceId && user.logoutStatus == 1) {
-              return reject({
-                code: CONFIG.SUCCESS_CODE,
-                message: CONFIG.ALREADY_UPDATED_DEVICE,
-              });
-            }
-
-            const updatelogoutStatus = await User.findOneAndUpdate(
-              { _id: user._id },
-              { logoutStatus: 1, deviceId: body.deviceId },
-              { new: true }
-            );
             var data = JSON.parse(JSON.stringify(user));
-            if (data.deviceId) {
-              data.deviceId = body.deviceId;
-            }
-            if (data.age != 0) {
-              let validateUser = new ValidateUser({
-                userId: data._id,
-                uuid: data.uuid,
-                deviceId: data.deviceId,
-              });
-              await validateUser.save();
-              let token = jwtUtil.issue({
-                data,
-              });
-              data.token = token;
-            }
+
             delete data.password;
             resolve({
               code: CONFIG.SUCCESS_CODE,
-              message: CONFIG.USER_SUCCESSFUL_LOGIN,
+              message: CONFIG.STAFF_SUCCESSFUL_LOGIN,
               data: data,
             });
           })

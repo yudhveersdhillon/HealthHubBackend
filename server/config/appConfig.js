@@ -140,7 +140,9 @@ let appConfig = {
   SUCCESS_CODE_STAFF_RETRIEVAL: "Staff Retrieved Successfully",
   NOT_FOUND_STAFF: "Not found staff",
   SUCCESS_STAFF_UPDATE: "Staff updated Successfully",
-  SUCCESS_CODE_STAFF_DELETED: "Staff deleted Successfully"
+  SUCCESS_CODE_STAFF_DELETED: "Staff deleted Successfully",
+  DOCTOR_SUCCESSFUL_LOGIN: "Doctor Login Successfully",
+  STAFF_SUCCESSFUL_LOGIN: "Staff Login Successfull"
 
 };
 

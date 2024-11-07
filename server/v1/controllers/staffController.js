@@ -1,9 +1,9 @@
 const service = require("../services/staffServices");
 const CONFIG = require("../../config/appConfig");
 
-let userService = new service();
+let staffService = new service();
 
-class userController {
+class staffController {
 
   userSignUp(req, res) {
     userService
@@ -16,9 +16,9 @@ class userController {
       });
   }
 
-  userLogin(req, res) {
-    userService
-      .userLogin(req, res)
+  Stafflogin(req, res) {
+    staffService
+      .Stafflogin(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -63,4 +63,4 @@ class userController {
 
 }
 
-module.exports = userController;
+module.exports = staffController;

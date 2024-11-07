@@ -4,6 +4,7 @@ const Util = require("../../utils/commonUtils");
 const jwtUtil = require("../../utils/JwtUtils");
 const Manager = require("../../models/doctor");
 const Admin = require("../../models/admin");
+const Doctor = require("../../models/doctor");
 const User = require("../../models/staff");
 const ObjectId = require("mongoose").Types.ObjectId;
 const qrCode = require("qrcode");
@@ -13,8 +14,8 @@ const bcrypt = require("bcrypt");
 
 const moment = require("moment");
 
-class managerService {
-  loginManager(req, res) {
+class doctorService {
+  Doctorlogin(req, res) {
     return new Promise(async function (resolve, reject) {
       var body = req.body;
       if (!body.password)
@@ -27,23 +28,13 @@ class managerService {
           code: CONFIG.ERROR_CODE,
           message: CONFIG.ERR_MISSING_EMAIL,
         });
-      Admin.findOne({
+        Doctor.findOne({
         email: body.email.toLowerCase(),
         status: CONFIG.ACTIVE_STATUS,
       })
         .select("+password")
-        .then(async (user) => {
-          if (user && user.role == 'admin') {
-            return reject({
-              code: CONFIG.ERROR_CODE_FORBIDDEN,
-              message: CONFIG.EMAIL_NOT_CORRECT,
-            });
-          }
-          if (!user || (user && user.role != "manager"))
-            return reject({
-              code: CONFIG.ERROR_CODE_FORBIDDEN,
-              message: CONFIG.EMAIL_NOT_CORRECT,
-            });
+        .then(async (user) => {     
+          
           const iscorrect = await user.comparePassword(body.password);
           if (!iscorrect)
             return reject({
@@ -56,12 +47,12 @@ class managerService {
           let token = jwtUtil.issue({
             email: data.email,
             _id: data._id,
-            name: data.name,
-            role: data.role,
+            name: data.name          
           });
           data.token = token;
           return resolve({
             code: CONFIG.SUCCESS_CODE,
+            message:CONFIG.DOCTOR_SUCCESSFUL_LOGIN,
             data: data,
           });
         })
@@ -200,4 +191,4 @@ class managerService {
 
 }
 
-module.exports = managerService;
+module.exports = doctorService;

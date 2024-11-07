@@ -123,7 +123,8 @@ let appConfig = {
   SUCCESS_STORE_FOUND: "Store found Successfully",
   SUCCESS_VERIFICATION_CREATED: "Verification session created successfully",
   SUCCESS_CALLBACK_CREATED: "Callback created Successfully",
-  ADMIN_SUCCESSFUL_LOGIN: "Admin login Successfully"
+  ADMIN_SUCCESSFUL_LOGIN: "Admin login Successfully",
+  SUCCESS_ADMIN_UPDATE:"Admin Updated Successfully"
 };
 
 module.exports = appConfig;

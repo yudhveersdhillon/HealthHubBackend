@@ -124,7 +124,135 @@ class adminService {
         });
     });
   }
+  getAdminById(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const adminId = req.params.id;
+        // Validate adminId
+        if (!adminId) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ADMIN_ID_MISSED,
+          });
+        }
+        // Check if adminId is a valid ObjectId
+        if (!adminId || !mongoose.Types.ObjectId.isValid(adminId)) {
+          reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ID_NOT_CORRECT,
+          });
+          return;
+        }
+        const admin = await Admin.findOne({
+          _id: adminId,
+          status: { $ne: 2 }
+        });
 
+        if (!admin) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ADMIN_NOT_FOUND,
+          });
+        }
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_ADMIN_RETRIEVAL,
+          data: admin,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+  // update admin details
+
+  updateAdmin(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const adminId = req.params.id;
+        let adminData = req.body;
+        if (req.file) {
+          // File upload successful
+          const adminDetails = await Admin.findOne({ email: adminData.email });
+          if (req.file && adminDetails.profileImage) {
+            const filePath = path.join(
+              __dirname,
+              "../../",
+              "public",
+              "uploads",
+              "profileImage",
+              adminDetails.profileImage.replace("static/", "")
+            );
+            fs.unlink(filePath, (err) => {
+              if (err) {
+                console.error("Error removing old file:", err.message);
+              } else {
+                console.log("File removed successfully");
+              }
+              adminData.profileImage = req.file
+                ? `static/profileImage/${req.file.filename}`
+                : null;
+              // Pass the uploaded data to the next middleware function
+            });
+          }
+        }
+        const admin = await Admin.findOne({ _id: adminId });
+        let adminInstance = new Admin(adminData);
+        if (!admin) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ERR_INVALID_EMAIL,
+          });
+        }
+        await Admin.updateOne(
+          { _id: adminId },
+          { $set: adminData },
+          { new: true, upsert: true }
+        );
+        const updatedAdmin = await Admin.findOne({ _id: adminId });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_ADMIN_UPDATE,
+          data: updatedAdmin,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  deleteAdmin(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const adminId = req.params.id;
+        const admin = await Admin.findOne({ _id: adminId });
+        if (!admin) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ERR_INVALID_EMAIL,
+          });
+        }
+
+        // Delete Admin Soft Delete
+        await Admin.updateOne({ _id: adminId }, { status: 2 }, { new: true });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_ADMIN_DELETED,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
   updateUser(req, res) {
     return new Promise(async function (resolve, reject) {
       try {

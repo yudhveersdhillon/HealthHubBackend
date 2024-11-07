@@ -4,7 +4,7 @@ const CONFIG = require("../../config/appConfig");
 const Util = require("../../utils/commonUtils");
 const mongoose = require("mongoose");
 const path = require("path");
-const User = require("../../models/staff");
+const Staff = require("../../models/staff");
 const Manager = require("../../models/doctor");
 const Admin = require("../../models/admin");
 const fs = require("fs");
@@ -92,7 +92,7 @@ class userService {
             code: CONFIG.ERROR_CODE,
             message: CONFIG.ERR_MISSING_EMAIL,
           });
-        User.findOne({
+        Staff.findOne({
           email: body.email.toLowerCase(),
           status: { $ne: 2 },
         })

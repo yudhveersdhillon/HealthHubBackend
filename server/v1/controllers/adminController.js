@@ -15,14 +15,11 @@ class adminController {
       });
   }
 
-
-
-
   login(req, res) {
     adminService
       .loginAdmin(req, res)
       .then((result) => {
-        return res.success(result.code, "", result.data);
+        return res.success(result.code, result.message, result.data);
       })
       .catch((error) => {
         return res.reject(error.code, error.message);

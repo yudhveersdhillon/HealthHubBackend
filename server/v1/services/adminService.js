@@ -115,6 +115,7 @@ class adminService {
           data.token = token;
           return resolve({
             code: CONFIG.SUCCESS_CODE,
+            message: CONFIG.ADMIN_SUCCESSFUL_LOGIN,
             data: data,
           });
         })

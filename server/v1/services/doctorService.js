@@ -36,7 +36,7 @@ class doctorService {
         .then(async (user) => {     
           if (!user) {
             return reject({
-              code: CONFIG.ERROR_CODE_NOT_FOUND,
+              code: CONFIG.ERROR_CODE,
               message: CONFIG.DOCTOR_NOT_FOUND,
             });
           }

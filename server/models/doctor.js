@@ -32,6 +32,9 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       // The hospital where the doctor works
     },
+    profileImage: {
+      type: String
+    },
     department: {
       type: String,
       // The department in the hospital (e.g., Surgery, Pediatrics)

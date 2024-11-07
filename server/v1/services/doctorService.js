@@ -28,12 +28,12 @@ class doctorService {
           code: CONFIG.ERROR_CODE,
           message: CONFIG.ERR_MISSING_EMAIL,
         });
-        Doctor.findOne({
+      Doctor.findOne({
         email: body.email.toLowerCase(),
         status: CONFIG.ACTIVE_STATUS,
       })
         .select("+password")
-        .then(async (user) => {     
+        .then(async (user) => {
           if (!user) {
             return reject({
               code: CONFIG.ERROR_CODE,
@@ -52,12 +52,12 @@ class doctorService {
           let token = jwtUtil.issue({
             email: data.email,
             _id: data._id,
-            name: data.name          
+            name: data.name
           });
           data.token = token;
           return resolve({
             code: CONFIG.SUCCESS_CODE,
-            message:CONFIG.DOCTOR_SUCCESSFUL_LOGIN,
+            message: CONFIG.DOCTOR_SUCCESSFUL_LOGIN,
             data: data,
           });
         })

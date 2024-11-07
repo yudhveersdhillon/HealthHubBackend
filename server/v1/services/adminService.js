@@ -43,15 +43,6 @@ class adminService {
               message: CONFIG.ERR_EMAIL_ALREADY_TAKEN,
             });
           }
-          // adminData = {
-          //   name: "test dddddd",
-          //   email: "testadminccccccxxxxdddxx@gmail.com",
-          //   password: "Qwdderty@12cc",
-          //   phone: "9876543210",
-          //   status: 1, // Converting string "1" to integer 1
-          //   role: "admin",
-          //   profileImage: "/static/image.png"
-          // };
 
           let adminInstance = new Admin(adminData);
           adminInstance.password = await adminInstance.setPassword(adminData.password);

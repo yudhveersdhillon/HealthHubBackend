@@ -33,6 +33,9 @@ const adminSchema = new mongoose.Schema(
             type: Number,
             default: 1, // 1 = active, 0 = inactive
         },
+        profileImage: {
+            type: String
+        },
         password: {
             type: String,
         },

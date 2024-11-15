@@ -11,11 +11,7 @@ const staffSchema = new mongoose.Schema(
       required: true, // Name of the staff member
     },
     email: {
-      type: String,
-      required: true,
-      lowercase: true,
-      unique: true, // Ensure email is unique for each staff member
-      index: true,
+      type: String,      
     },
     birthdate: {
       type: Date,
@@ -23,7 +19,6 @@ const staffSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      select: false,  // Password is not selected by default
     },
     age: {
       type: Number,

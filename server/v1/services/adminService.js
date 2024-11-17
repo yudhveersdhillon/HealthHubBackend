@@ -200,7 +200,7 @@ class adminService {
                   : null;
                 // Pass the uploaded data to the next middleware function
               });
-            } else {
+            } else if (req.file) {
               adminData.profileImage = req.file
                 ? `static/profileImage/${req.file.filename}`
                 : null;
@@ -661,6 +661,10 @@ class adminService {
                 : null;
               // Pass the uploaded data to the next middleware function
             });
+          }else if (req.file){
+            staffData.profileImage = req.file
+            ? `static/profileImage/${req.file.filename}`
+            : null;
           }
         }
 

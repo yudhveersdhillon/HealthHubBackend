@@ -178,7 +178,7 @@ class adminService {
         if (req.file) {
           // File upload successful
           const adminDetails = await Admin.findOne({ email: adminData.email });
-          if (req.file && adminDetails.profileImage) {
+          if (adminDetails && (req.file )&& adminDetails.profileImage) {
             const filePath = path.join(
               __dirname,
               "../../",

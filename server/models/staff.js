@@ -39,10 +39,7 @@ const staffSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
+   
     role: {
       type: String,
       enum: ["receptionist", "nurse" ], // Defining roles for the hospital staff

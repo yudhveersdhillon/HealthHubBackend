@@ -175,7 +175,6 @@ class adminService {
       try {
         const adminId = req.params.id;
         let adminData = req.body;
-        console.log(req.file, "filess");
 
         if (req.file) {
           // File upload successful
@@ -216,7 +215,6 @@ class adminService {
             message: CONFIG.ERR_INVALID_EMAIL,
           });
         }
-        console.log(adminData, "adminData adminData");
 
         await Admin.updateOne(
           { _id: adminId },
@@ -409,6 +407,8 @@ class adminService {
     return new Promise(async function (resolve, reject) {
       try {
         const doctorId = req.params.id;
+        let doctorData = req.body;
+
         const doctor = await Doctor.findOne({ _id: doctorId });
         if (!doctor) {
           return reject({
@@ -417,7 +417,6 @@ class adminService {
           });
         }
 
-        let doctorData = req.body;
         if (req.file) {
           // File upload successful
           const doctorDetails = await Doctor.findOne({ _id: doctorId });
@@ -452,12 +451,13 @@ class adminService {
         }
         console.log(doctorData, "doctorData");
 
-        await Doctor.updateOne(
-          { _id: doctorId },
-          { $set: doctorData },
-          { new: true }
-        );
-        const updatedDoctor = await Doctor.findOne({ _id: doctorId });
+        // await Doctor.updateOne(
+        //   { _id: doctorId },
+        //   { $set: doctorData },
+        //   { new: true }
+        // );
+
+        const updatedDoctor = await Doctor.findOneAndUpdate({ _id: doctorId }, doctorData, { new: true });
         resolve({
           code: CONFIG.SUCCESS_CODE,
           message: CONFIG.SUCCESS_DOCTOR_UPDATE,

@@ -420,7 +420,10 @@ class adminService {
         if (req.file) {
           // File upload successful
           const doctorDetails = await Doctor.findOne({ _id: doctorId });
-          if (req.file && doctorDetails.profileImage) {
+          console.log(req.file,"req.filereq.file req.file ");
+          
+          if (req.file && doctorDetails) {
+            if(doctorDetails.profileImage){
             const filePath = path.join(
               __dirname,
               "../../",
@@ -445,18 +448,19 @@ class adminService {
             ? `static/profileImage/${req.file.filename}`
             : null; 
           }
+          }
         }
 
         await Doctor.updateOne(
           { _id: doctorId },
           { $set: doctorData },
-          { new: true, upsert: true }
+          { new: true }
         );
-        const updateDoctor = await Doctor.findOne({ _id: doctorId });
+        const updatedDoctor = await Doctor.findOne({ _id: doctorId });
         resolve({
           code: CONFIG.SUCCESS_CODE,
           message: CONFIG.SUCCESS_DOCTOR_UPDATE,
-          data: updateDoctor,
+          data: updatedDoctor,
         });
       } catch (error) {
         reject({

@@ -439,13 +439,6 @@ class adminService {
           // Update the new profile image path
           doctorData.profileImage = `static/profileImage/${req.file.filename}`;
         }
-        console.log(doctorData, "doctorData");
-
-        // await Doctor.updateOne(
-        //   { _id: doctorId },
-        //   { $set: doctorData },
-        //   { new: true }
-        // );
 
         const updatedDoctor = await Doctor.findOneAndUpdate(
           { _id: doctorId },

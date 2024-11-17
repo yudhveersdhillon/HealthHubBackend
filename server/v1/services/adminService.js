@@ -201,13 +201,15 @@ class adminService {
           }
         }
         const admin = await Admin.findOne({ _id: adminId });
-        let adminInstance = new Admin(adminData);
+        //let adminInstance = new Admin(adminData);
         if (!admin) {
           return reject({
             code: CONFIG.ERROR_CODE,
             message: CONFIG.ERR_INVALID_EMAIL,
           });
         }
+        console.log(adminData,"adminData adminData");
+        
         await Admin.updateOne(
           { _id: adminId },
           { $set: adminData },

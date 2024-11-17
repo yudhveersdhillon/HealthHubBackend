@@ -178,26 +178,32 @@ class adminService {
         if (req.file) {
           // File upload successful
           const adminDetails = await Admin.findOne({ email: adminData.email });
-          if (adminDetails && (req.file )&& adminDetails.profileImage) {
-            const filePath = path.join(
-              __dirname,
-              "../../",
-              "public",
-              "uploads",
-              "profileImage",
-              adminDetails.profileImage.replace("static/", "")
-            );
-            fs.unlink(filePath, (err) => {
-              if (err) {
-                console.error("Error removing old file:", err.message);
-              } else {
-                console.log("File removed successfully");
-              }
+          if (adminDetails && req.file) {
+            if (adminDetails.profileImage) {
+              const filePath = path.join(
+                __dirname,
+                "../../",
+                "public",
+                "uploads",
+                "profileImage",
+                adminDetails.profileImage.replace("static/", "")
+              );
+              fs.unlink(filePath, (err) => {
+                if (err) {
+                  console.error("Error removing old file:", err.message);
+                } else {
+                  console.log("File removed successfully");
+                }
+                adminData.profileImage = req.file
+                  ? `static/profileImage/${req.file.filename}`
+                  : null;
+                // Pass the uploaded data to the next middleware function
+              });
+            }else{
               adminData.profileImage = req.file
-                ? `static/profileImage/${req.file.filename}`
-                : null;
-              // Pass the uploaded data to the next middleware function
-            });
+              ? `static/profileImage/${req.file.filename}`
+              : null;
+            }
           }
         }
         const admin = await Admin.findOne({ _id: adminId });
@@ -208,8 +214,8 @@ class adminService {
             message: CONFIG.ERR_INVALID_EMAIL,
           });
         }
-        console.log(adminData,"adminData adminData");
-        
+        console.log(adminData, "adminData adminData");
+
         await Admin.updateOne(
           { _id: adminId },
           { $set: adminData },

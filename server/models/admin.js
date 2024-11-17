@@ -11,14 +11,14 @@ const adminSchema = new mongoose.Schema(
         },
         address: {
             type: String,
-           
+
         },
         contactNumber: {
             type: String,
         },
         email: {
             type: String,
-            
+
         },
         website: {
             type: String,

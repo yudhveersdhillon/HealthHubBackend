@@ -419,7 +419,7 @@ class adminService {
         let doctorData = req.body;
         if (req.file) {
           // File upload successful
-          const doctorDetails = await Doctor.findOne({ email: adminData.email });
+          const doctorDetails = await Doctor.findOne({ _id: doctorId });
           if (req.file && doctorDetails.profileImage) {
             const filePath = path.join(
               __dirname,
@@ -440,6 +440,10 @@ class adminService {
                 : null;
               // Pass the uploaded data to the next middleware function
             });
+          }else{
+            doctorData.profileImage = req.file
+            ? `static/profileImage/${req.file.filename}`
+            : null; 
           }
         }
 

@@ -15,7 +15,6 @@ const staffSchema = new mongoose.Schema(
     },
     birthdate: {
       type: Date,
-      required: true, // Birthdate is required for staff registration
     },
     password: {
       type: String,
@@ -30,7 +29,6 @@ const staffSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: true,  // Staff member's phone number is now required
     },
     status: {
       type: Number,
@@ -48,12 +46,10 @@ const staffSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["receptionist", "nurse" ], // Defining roles for the hospital staff
-      required: true,  // Role must be specified when registering the staff member
     },
     hospital: {
       type: Schema.Types.ObjectId,
       ref: "Hospital",  // Reference to the hospital where the staff member is working
-      required: true,  // Hospital must be specified
     },
     department: {
       type: String,
@@ -64,7 +60,6 @@ const staffSchema = new mongoose.Schema(
     adminId: {
       type: Schema.Types.ObjectId,
       ref: "Admin",  // Reference to the admin who registered the staff member
-      required: true,
     },
   },
   {

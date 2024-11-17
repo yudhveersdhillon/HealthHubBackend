@@ -424,7 +424,7 @@ class adminService {
           const doctorDetails = await Doctor.findOne({ _id: doctorId });
           
           if (req.file && doctorDetails) {
-            if(doctorDetails.profileImage){
+            if(typeof doctorDetails.profileImage === 'string'){
             const filePath = path.join(
               __dirname,
               "../../",

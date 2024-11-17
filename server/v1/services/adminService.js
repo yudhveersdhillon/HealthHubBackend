@@ -419,35 +419,25 @@ class adminService {
 
         if (req.file) {
           // File upload successful
-          const doctorDetails = await Doctor.findOne({ _id: doctorId });
-
-          if (req.file && doctorDetails) {
-            if (typeof doctorDetails.profileImage === 'string') {
-              const filePath = path.join(
-                __dirname,
-                "../../",
-                "public",
-                "uploads",
-                "profileImage",
-                doctorDetails.profileImage.replace("static/", "")
-              );
-              fs.unlink(filePath, (err) => {
-                if (err) {
-                  console.error("Error removing old file:", err.message);
-                } else {
-                  console.log("File removed successfully");
-                }
-                doctorData.profileImage = req.file
-                  ? `static/profileImage/${req.file.filename}`
-                  : null;
-                // Pass the uploaded data to the next middleware function
-              });
-            } else {
-              doctorData.profileImage = req.file
-                ? `static/profileImage/${req.file.filename}`
-                : null;
+          if (typeof doctor.profileImage === 'string' && doctor.profileImage.includes('static/profileImage/')) {
+            const filePath = path.join(
+              __dirname,
+              "../../",
+              "public",
+              "uploads",
+              "profileImage",
+              doctor.profileImage.replace("static/", "")
+            );
+            try {
+              await fs.promises.unlink(filePath);
+              console.log("Old profile image removed successfully.");
+            } catch (err) {
+              console.error("Error removing old file:", err.message);
             }
           }
+  
+          // Update the new profile image path
+          doctorData.profileImage = `static/profileImage/${req.file.filename}`;
         }
         console.log(doctorData, "doctorData");
 
@@ -457,7 +447,12 @@ class adminService {
         //   { new: true }
         // );
 
-        const updatedDoctor = await Doctor.findOneAndUpdate({ _id: doctorId }, doctorData, { new: true });
+        const updatedDoctor = await Doctor.findOneAndUpdate(
+          { _id: doctorId },
+          { $set: doctorData },
+          { new: true }
+        );
+
         resolve({
           code: CONFIG.SUCCESS_CODE,
           message: CONFIG.SUCCESS_DOCTOR_UPDATE,

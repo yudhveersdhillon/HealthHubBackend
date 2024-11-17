@@ -416,11 +416,12 @@ class adminService {
             message: CONFIG.NOT_FOUND_DOCTOR,
           });
         }
+        console.log(doctor,"doctor ");
+        
         let doctorData = req.body;
         if (req.file) {
           // File upload successful
           const doctorDetails = await Doctor.findOne({ _id: doctorId });
-          console.log(req.file,"req.filereq.file req.file ");
           
           if (req.file && doctorDetails) {
             if(doctorDetails.profileImage){

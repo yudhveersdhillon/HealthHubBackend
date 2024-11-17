@@ -175,6 +175,8 @@ class adminService {
       try {
         const adminId = req.params.id;
         let adminData = req.body;
+        console.log(req.file,"filess");
+        
         if (req.file) {
           // File upload successful
           const adminDetails = await Admin.findOne({ email: adminData.email });

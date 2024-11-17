@@ -175,8 +175,8 @@ class adminService {
       try {
         const adminId = req.params.id;
         let adminData = req.body;
-        console.log(req.file,"filess");
-        
+        console.log(req.file, "filess");
+
         if (req.file) {
           // File upload successful
           const adminDetails = await Admin.findOne({ _id: adminId });
@@ -201,10 +201,10 @@ class adminService {
                   : null;
                 // Pass the uploaded data to the next middleware function
               });
-            }else{
+            } else {
               adminData.profileImage = req.file
-              ? `static/profileImage/${req.file.filename}`
-              : null;
+                ? `static/profileImage/${req.file.filename}`
+                : null;
             }
           }
         }
@@ -416,41 +416,41 @@ class adminService {
             message: CONFIG.NOT_FOUND_DOCTOR,
           });
         }
-        console.log(doctor,"doctor ");
-        
+
         let doctorData = req.body;
         if (req.file) {
           // File upload successful
           const doctorDetails = await Doctor.findOne({ _id: doctorId });
-          
+
           if (req.file && doctorDetails) {
-            if(typeof doctorDetails.profileImage === 'string'){
-            const filePath = path.join(
-              __dirname,
-              "../../",
-              "public",
-              "uploads",
-              "profileImage",
-              doctorDetails.profileImage.replace("static/", "")
-            );
-            fs.unlink(filePath, (err) => {
-              if (err) {
-                console.error("Error removing old file:", err.message);
-              } else {
-                console.log("File removed successfully");
-              }
+            if (typeof doctorDetails.profileImage === 'string') {
+              const filePath = path.join(
+                __dirname,
+                "../../",
+                "public",
+                "uploads",
+                "profileImage",
+                doctorDetails.profileImage.replace("static/", "")
+              );
+              fs.unlink(filePath, (err) => {
+                if (err) {
+                  console.error("Error removing old file:", err.message);
+                } else {
+                  console.log("File removed successfully");
+                }
+                doctorData.profileImage = req.file
+                  ? `static/profileImage/${req.file.filename}`
+                  : null;
+                // Pass the uploaded data to the next middleware function
+              });
+            } else {
               doctorData.profileImage = req.file
                 ? `static/profileImage/${req.file.filename}`
                 : null;
-              // Pass the uploaded data to the next middleware function
-            });
-          }else{
-            doctorData.profileImage = req.file
-            ? `static/profileImage/${req.file.filename}`
-            : null; 
-          }
+            }
           }
         }
+        console.log(doctorData, "doctorData");
 
         await Doctor.updateOne(
           { _id: doctorId },

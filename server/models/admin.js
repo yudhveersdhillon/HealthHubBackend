@@ -23,6 +23,9 @@ const adminSchema = new mongoose.Schema(
         website: {
             type: String,
         },
+        profileImage: {
+            type: String,
+        },
         totalBeds: {
             type: Number,
         },

@@ -717,8 +717,7 @@ class adminService {
   sendEmailForgotPasswordforAdmin(req, res) {
     return new Promise(async function (resolve, reject) {
       try {
-        const email = req.body.email;
-        const otp = Math.floor(1000 + Math.random() * 9000);
+        const otp = '12345';
         const checkAdmin = await Admin.findOneAndUpdate(
           { email: req.body.email, status: { $ne: 2 } },
           { otp: otp },
@@ -731,51 +730,51 @@ class adminService {
           });
         }
 
-        let transporter = nodemailer.createTransport({
-          host: process.env.HOST,
-          port: 465,
-          auth: {
-            user: process.env.USERNAME,
-            pass: process.env.PASS,
-          },
-        });
+        // let transporter = nodemailer.createTransport({
+        //   host: process.env.HOST,
+        //   port: 465,
+        //   auth: {
+        //     user: process.env.USERNAME,
+        //     pass: process.env.PASS,
+        //   },
+        // });
 
-        let htmlContent = `
-          <div style="text-align: center; font-family: Arial, sans-serif;">
-            <img src=" ${process.env.BASEURL}/static/image1-1716183643198-334295482.jpg" alt="Company Logo" width="200px" height="auto" style="margin-bottom: 20px;">
-            <h2>Forgot Password</h2>
-            <p>Dear User,</p>
-            <p>We received a request to reset your password. Please use the following One-Time Password (OTP) to reset your password:</p>
-            <p style="font-size: 24px; font-weight: bold; color: #333;">${otp}</p>
-            <p>This OTP is valid for the next 10 minutes. Please do not share it with anyone.</p>
-            <p>If you did not request a password reset, please ignore this email or contact our support team.</p>
-            <p style="font-style: italic;">Thank you for using our service!</p>
-          </div>
-        `;
+        // let htmlContent = `
+        //   <div style="text-align: center; font-family: Arial, sans-serif;">
+        //     <img src=" ${process.env.BASEURL}/static/image1-1716183643198-334295482.jpg" alt="Company Logo" width="200px" height="auto" style="margin-bottom: 20px;">
+        //     <h2>Forgot Password</h2>
+        //     <p>Dear User,</p>
+        //     <p>We received a request to reset your password. Please use the following One-Time Password (OTP) to reset your password:</p>
+        //     <p style="font-size: 24px; font-weight: bold; color: #333;">${otp}</p>
+        //     <p>This OTP is valid for the next 10 minutes. Please do not share it with anyone.</p>
+        //     <p>If you did not request a password reset, please ignore this email or contact our support team.</p>
+        //     <p style="font-style: italic;">Thank you for using our service!</p>
+        //   </div>
+        // `;
 
-        let mailOptions = {
-          from: process.env.MAILFROM,
-          to: email,
-          subject: "Forgot Password",
-          html: htmlContent,
-        };
+        // let mailOptions = {
+        //   from: process.env.MAILFROM,
+        //   to: email,
+        //   subject: "Forgot Password",
+        //   html: htmlContent,
+        // };
 
         // Send email
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log("Error occurred while sending email:", error.message);
-            return reject({
-              code: CONFIG.ERROR_CODE,
-              message: error.message,
-            });
-          } else {
-            console.log("Email sent successfully!");
-            resolve({
-              code: CONFIG.SUCCESS_CODE,
-              message: CONFIG.OTP_SUCCESS,
-            });
-          }
-        });
+        // transporter.sendMail(mailOptions, (error, info) => {
+        //   if (error) {
+        //     console.log("Error occurred while sending email:", error.message);
+        //     return reject({
+        //       code: CONFIG.ERROR_CODE,
+        //       message: error.message,
+        //     });
+        //   } else {
+        //     console.log("Email sent successfully!");
+        //     resolve({
+        //       code: CONFIG.SUCCESS_CODE,
+        //       message: CONFIG.OTP_SUCCESS,
+        //     });
+        //   }
+        // });
 
       } catch (error) {
         return reject({

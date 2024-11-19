@@ -342,7 +342,13 @@ class adminService {
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit);
-        const doctorCount = await Doctor.countDocuments({ status: { $ne: 2 } })
+        const doctorCount = await Doctor.countDocuments({
+          status: { $ne: 2 },
+          $or: [
+            { name: { $regex: new RegExp(word, "i") } },
+            { email: { $regex: new RegExp(word, "i") } },
+          ],
+        })
 
         resolve({
           code: CONFIG.SUCCESS_CODE,
@@ -435,7 +441,7 @@ class adminService {
               console.error("Error removing old file:", err.message);
             }
           }
-  
+
           // Update the new profile image path
           doctorData.profileImage = `static/profileImage/${req.file.filename}`;
         }
@@ -565,7 +571,11 @@ class adminService {
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit);
-        const staffCount = await Staff.countDocuments({ status: { $ne: 2 } })
+        const staffCount = await Staff.countDocuments({ status: { $ne: 2 },
+          $or: [
+            { name: { $regex: new RegExp(word, "i") } },
+            { email: { $regex: new RegExp(word, "i") } },
+          ], })
 
         resolve({
           code: CONFIG.SUCCESS_CODE,
@@ -661,10 +671,10 @@ class adminService {
                 : null;
               // Pass the uploaded data to the next middleware function
             });
-          }else if (req.file){
+          } else if (req.file) {
             staffData.profileImage = req.file
-            ? `static/profileImage/${req.file.filename}`
-            : null;
+              ? `static/profileImage/${req.file.filename}`
+              : null;
           }
         }
 

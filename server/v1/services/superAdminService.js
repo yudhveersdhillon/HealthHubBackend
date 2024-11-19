@@ -117,7 +117,7 @@ class superAdminService {
                     data.token = token;
                     return resolve({
                         code: CONFIG.SUCCESS_CODE,
-                        message: CONFIG.ADMIN_SUCCESSFUL_LOGIN,
+                        message: CONFIG.SUPERADMIN_SUCCESSFUL_LOGIN,
                         data: data,
                     });
                 })

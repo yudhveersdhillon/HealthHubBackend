@@ -16,7 +16,7 @@ class superAdminController {
     }
 
     login(req, res) {
-        adminService
+        superAdminService
             .loginAdmin(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -26,7 +26,7 @@ class superAdminController {
             });
     }
     getAdminbyId(req, res) {
-        adminService
+        superAdminService
             .getAdminById(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -37,7 +37,7 @@ class superAdminController {
     }
 
     updateAdmin(req, res) {
-        adminService
+        superAdminService
             .updateAdmin(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -48,7 +48,7 @@ class superAdminController {
     }
 
     deleteAdmin(req, res) {
-        adminService
+        superAdminService
             .deleteAdmin(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -58,7 +58,7 @@ class superAdminController {
             });
     }
     updateUser(req, res) {
-        adminService
+        superAdminService
             .updateUser(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -70,7 +70,7 @@ class superAdminController {
 
 
     adminDoctorRegister(req, res) {
-        adminService
+        superAdminService
             .adminDoctorRegister(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -80,7 +80,7 @@ class superAdminController {
             });
     }
     getAllDoctorList(req, res) {
-        adminService
+        superAdminService
             .getAllDoctorList(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -91,7 +91,7 @@ class superAdminController {
     }
 
     getDoctorbyId(req, res) {
-        adminService
+        superAdminService
             .getDoctorbyId(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -102,7 +102,7 @@ class superAdminController {
     }
 
     updateDoctor(req, res) {
-        adminService
+        superAdminService
             .updateDoctor(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -113,7 +113,7 @@ class superAdminController {
     }
 
     deleteDoctor(req, res) {
-        adminService
+        superAdminService
             .deleteDoctor(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -125,7 +125,7 @@ class superAdminController {
 
     adminStaffRegister
         (req, res) {
-        adminService
+            superAdminService
             .adminStaffRegister(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -136,7 +136,7 @@ class superAdminController {
     }
 
     getAllStaffList(req, res) {
-        adminService
+        superAdminService
             .getAllStaffList(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -147,7 +147,7 @@ class superAdminController {
     }
 
     getStaffbyId(req, res) {
-        adminService
+        superAdminService
             .getStaffbyId(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -158,7 +158,7 @@ class superAdminController {
     }
 
     updateStaff(req, res) {
-        adminService
+        superAdminService
             .updateStaff(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
@@ -169,7 +169,7 @@ class superAdminController {
     }
 
     deleteStaff(req, res) {
-        adminService
+        superAdminService
             .deleteStaff(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);

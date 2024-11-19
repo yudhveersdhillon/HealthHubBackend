@@ -27,6 +27,28 @@ class staffController {
       });
   }
 
+  CreateAppointment(req, res) {
+    staffService
+      .CreateAppointment(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  getOldPatientData(req, res) {
+    staffService
+      .getOldPatientData(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  
   updateUserDeatails(req, res) {
     userService
       .updateUserDeatails(req, res)
@@ -62,7 +84,7 @@ class staffController {
 
   sendEmailForgotPasswordforStaff(req, res) {
     staffService
-      .sendEmailForgotPasswordforStaff(req, res) 
+      .sendEmailForgotPasswordforStaff(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -73,7 +95,7 @@ class staffController {
 
   verifyEmailOtpforStaff(req, res) {
     staffService
-      .verifyEmailOtpforStaff(req, res) 
+      .verifyEmailOtpforStaff(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -83,7 +105,7 @@ class staffController {
   }
   updatePasswordforStaffEmail(req, res) {
     staffService
-      .updatePasswordforStaffEmail(req, res) 
+      .updatePasswordforStaffEmail(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })

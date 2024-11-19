@@ -4,6 +4,8 @@ const Util = require("../../utils/commonUtils");
 const jwtUtil = require("../../utils/JwtUtils");
 const Manager = require("../../models/doctor");
 const Admin = require("../../models/admin");
+const Patient = require("../../models/patient");
+const Appointment = require("../../models/appointment");
 const Doctor = require("../../models/doctor");
 const User = require("../../models/staff");
 const ObjectId = require("mongoose").Types.ObjectId;
@@ -13,6 +15,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 
 const moment = require("moment");
+const appointment = require("../../models/appointment");
 
 class doctorService {
   Doctorlogin(req, res) {
@@ -66,6 +69,104 @@ class doctorService {
         });
     });
   }
+
+  DoctorAppointmentList(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const { page = 1, limit = 10 } = req.query;  // Pagination (default page = 1, limit = 10)
+        const doctorId = req.user._id;  // Assuming req.user._id contains the logged-in doctor's ID
+
+        const aggregatePipeline = [
+          {
+            $match: {
+              doctorId: doctorId,  // Match appointments for the specific doctor
+            },
+          },
+          {
+            $lookup: {
+              from: "patients",  // Lookup from the 'Patient' collection
+              localField: "patientId",  // Field in the Appointment model to join with
+              foreignField: "_id",  // Field in the Patient model to join with
+              as: "patientDetails",  // Alias for the array of patient details
+            },
+          },
+          {
+            $unwind: {
+              path: "$patientDetails",  // Unwind the patientDetails array to get the patient details
+              preserveNullAndEmptyArrays: true,  // To include appointments with no patientDetails
+            },
+          },
+          {
+            $skip: (page - 1) * limit,  // Skip for pagination
+          },
+          {
+            $limit: parseInt(limit),  // Limit the number of results per page
+          },
+          {
+            $project: {
+              "patientDetails.firstName": 1,
+              "patientDetails.lastName": 1,
+              "patientDetails.email": 1,
+              "patientDetails.phone": 1,
+              "appointmentDate": 1,
+              "status": 1,
+              _id: 1,
+            },
+          },
+          {
+            $facet: {
+              totalCount: [{ $count: "total" }],  // Count total documents for pagination
+              data: [{ $skip: (page - 1) * limit }, { $limit: parseInt(limit) }],
+            },
+          },
+        ];
+
+        const appointmentData = await Appointment.aggregate(aggregatePipeline);
+
+        // Extract total count and data from the facet
+        const totalCount = appointmentData[0]?.totalCount[0]?.total || 0;
+        const appointments = appointmentData[0]?.data || [];
+
+        return resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: "Appointments fetched successfully",
+          data: appointments,
+          totalCount: totalCount
+        });
+      } catch (err) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: err.message,
+        });
+      }
+    });
+  }
+
+  DoctorPerPatientData(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientId = req.params.id;
+        const patientData = await Patient.findOne({ _id: patientId });
+        if (!patientData) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: "Patient not found",
+          });
+        }
+        return resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: "Patient fetched successfully",
+          data: patientData
+        });
+      } catch (err) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: err.message,
+        });
+      }
+    });
+  }
+
 
   registerManager(req, res) {
     return new Promise(async function (resolve, reject) {

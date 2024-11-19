@@ -8,6 +8,8 @@ const doctorController = require("../controllers/doctorController");
 let doctorRepo = new doctorController();
 
 route.post("/login", doctorRepo.Doctorlogin);
+route.get("/appointment/list", doctorRepo.DoctorAppointmentList);
+route.get("/patient/:id", doctorRepo.DoctorPerPatientData);
 
 // route.post("/login", managerRepo.login);
 // route.post("/register", managerAndStoreupload.fields([

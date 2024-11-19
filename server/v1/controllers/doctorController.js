@@ -6,7 +6,7 @@ let doctorService = new service();
 class doctorController {
   Doctorlogin(req, res) {
     doctorService
-      .Doctorlogin(req, res) 
+      .Doctorlogin(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -14,10 +14,30 @@ class doctorController {
         return res.reject(error.code, error.message);
       });
   }
-
+  DoctorAppointmentList(req, res) {
+    doctorService
+      .DoctorAppointmentList(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  DoctorPerPatientData
+    (req, res) {
+    doctorService
+      .DoctorPerPatientData(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
   register(req, res) {
     doctorService
-      .registerDoctor(req, res) 
+      .registerDoctor(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -26,10 +46,10 @@ class doctorController {
       });
   }
 
-  
+
   sendEmailForgotPasswordforDoctor(req, res) {
     doctorService
-      .sendEmailForgotPasswordforDoctor(req, res) 
+      .sendEmailForgotPasswordforDoctor(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -40,7 +60,7 @@ class doctorController {
 
   verifyEmailOtpforDoctor(req, res) {
     doctorService
-      .verifyEmailOtpforDoctor(req, res) 
+      .verifyEmailOtpforDoctor(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })
@@ -50,7 +70,7 @@ class doctorController {
   }
   updatePasswordforDoctorEmail(req, res) {
     doctorService
-      .updatePasswordforDoctorEmail(req, res) 
+      .updatePasswordforDoctorEmail(req, res)
       .then((result) => {
         return res.success(result.code, result.message, result.data);
       })

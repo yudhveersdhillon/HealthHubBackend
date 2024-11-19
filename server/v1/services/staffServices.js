@@ -5,6 +5,8 @@ const Util = require("../../utils/commonUtils");
 const mongoose = require("mongoose");
 const path = require("path");
 const Staff = require("../../models/staff");
+const Appointment = require("../../models/appointment");
+const Patient = require("../../models/patient");
 const Manager = require("../../models/doctor");
 const Admin = require("../../models/admin");
 const fs = require("fs");
@@ -139,6 +141,114 @@ class userService {
       }
     });
   }
+  getOldPatientData(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const {
+          patientUniqueId
+        } = req.body;
+
+        const patient = await Patient.findOne({ patientUniqueId: patientUniqueId });
+
+        if (!patient) {
+          return resolve({
+            code: CONFIG.SUCCESS_CODE,
+            message: "Patient Doesn't exists",
+          });
+        }
+        return resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: "Appointment created successfully.",
+          data: patient,
+        });
+      } catch (error) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  CreateAppointment(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const {
+          firstName,
+          lastName,
+          email,
+          phone,
+          dateOfBirth,
+          gender,
+          address,
+          medicalHistory,
+          allergies,
+          bloodGroup,
+          emergencyContact,
+          insuranceProvider,
+          insurancePolicyNumber,
+          doctorId,
+          appointmentDate,
+          patientUniqueId
+        } = req.body;
+
+        // Validate required fields
+        if (!doctorId || !appointmentDate) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: "Missing required fields: doctorId, or appointmentDate.",
+          });
+        }
+
+        // Check if the patient already exists
+        let patient = await Patient.findOne({ patientUniqueId: patientUniqueId });
+
+        if (!patient) {
+          const uniqueId = `PAT-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+          // Create a new patient
+          patient = await Patient.create({
+            firstName,
+            lastName,
+            email: email.toLowerCase(),
+            phone,
+            dateOfBirth,
+            gender,
+            address,
+            medicalHistory,
+            allergies,
+            bloodGroup,
+            emergencyContact,
+            insuranceProvider,
+            insurancePolicyNumber,
+            patientUniqueId: uniqueId, // Assign the unique ID
+          });
+        }
+
+        // Create the appointment
+        const appointment = await Appointment.create({
+          patientId: patient._id,
+          doctorId,
+          appointmentDate,
+        });
+
+        // Return success response
+        return resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: "Appointment created successfully.",
+          data: {
+            appointment,
+            patient,
+          },
+        });
+      } catch (error) {
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
   updateUserDeatails(req, res) {
     return new Promise(async function (resolve, reject) {
       try {

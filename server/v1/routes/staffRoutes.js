@@ -10,6 +10,8 @@ let staffRepo = new staffController();
 
 
 route.post("/login", staffRepo.Stafflogin);
+route.post("/createappointment", staffRepo.CreateAppointment);
+route.get("/patient/data/:id", staffRepo.getOldPatientData);
 
 // route.put("/update/details", userRepo.updateUserDeatails);
 

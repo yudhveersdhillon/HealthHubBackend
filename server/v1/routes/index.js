@@ -86,7 +86,7 @@ route.post("/callback", function (req, res) {
     console.log("Post", req.body);
     res.status(200).send("please close this window and go back to app");
 });
-
+route.use("/superAdmin", require("./superAdminRoutes"));
 route.use("/admin", require("./adminRoutes"));
 route.use("/doctor", require("./doctorRoutes"));
 route.use("/staff", require("./staffRoutes"));

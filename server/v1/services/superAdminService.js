@@ -113,8 +113,6 @@ class superAdminService {
                     let token = jwtUtil.issue({
                         email: data.email,
                         _id: data._id,
-                        name: data.name,
-                        role: data.role,
                     });
                     data.token = token;
                     return resolve({

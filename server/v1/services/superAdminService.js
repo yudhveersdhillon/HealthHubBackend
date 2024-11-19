@@ -17,6 +17,7 @@ const nodemailer = require("nodemailer");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 class adminService {
+    
     adminRegister(req, res) {
         return new Promise(async (resolve, reject) => {
             try {

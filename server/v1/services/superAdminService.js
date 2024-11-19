@@ -16,8 +16,8 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const ObjectId = require("mongoose").Types.ObjectId;
 
-class adminService {
-    
+class superAdminService {
+
     adminRegister(req, res) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -894,4 +894,4 @@ class adminService {
     }
 }
 
-module.exports = adminService;
+module.exports = superAdminService;

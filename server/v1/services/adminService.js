@@ -729,7 +729,6 @@ class adminService {
   sendEmailForgotPasswordforAdmin(req, res) {
     return new Promise(async function (resolve, reject) {
       try {
-        console.log("step 1");
 
         const otp = '12345';
         const checkAdmin = await Admin.findOneAndUpdate(
@@ -737,7 +736,6 @@ class adminService {
           { otp: otp },
           { new: true }
         );
-        console.log("step 2");
 
         if (!checkAdmin) {
           return reject({
@@ -809,13 +807,11 @@ class adminService {
     return new Promise(async function (resolve, reject) {
       try {
         const { email, otp } = req.body;
-        console.log(req.body, "req.body");
 
         const check = await Admin.findOne({
           email: email,
           status: { $ne: 2 },
         });
-        console.log("step 2");
 
         if (check) {
           if (otp == check.otp) {

@@ -42,6 +42,10 @@ const adminSchema = new mongoose.Schema(
         password: {
             type: String,
         },
+        otp: {
+            type: Number,
+            default: 0,
+          },
         doctors: [
             {
                 type: mongoose.Schema.Types.ObjectId,

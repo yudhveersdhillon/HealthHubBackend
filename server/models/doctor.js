@@ -48,6 +48,10 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       // Address of the doctor (where they are based)
     },
+    otp: {
+      type: Number,
+      default: 0,
+    },
     password: {
       type: String,
       // Password is not returned in queries by default

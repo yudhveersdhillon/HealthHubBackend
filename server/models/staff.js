@@ -42,7 +42,7 @@ const staffSchema = new mongoose.Schema(
    
     role: {
       type: String,
-      enum: ["receptionist", "nurse" ], // Defining roles for the hospital staff
+      enum: ["receptionist", "nurse","staff" ], // Defining roles for the hospital staff
     },
     hospital: {
       type: Schema.Types.ObjectId,

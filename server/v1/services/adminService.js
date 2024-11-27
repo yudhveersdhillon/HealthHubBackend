@@ -329,9 +329,9 @@ class adminService {
     return new Promise(async function (resolve, reject) {
       try {
         const page = parseInt(req.query.page) || 1;
-        const limit = 10;
+        const limit = req.query.limit;
         const skip = (page - 1) * limit;
-        const word = req.query.word;
+        const word = req.query.search;
         const doctorList = await Doctor.find({
           status: { $ne: 2 },
           $or: [
@@ -558,9 +558,9 @@ class adminService {
     return new Promise(async function (resolve, reject) {
       try {
         const page = parseInt(req.query.page) || 1;
-        const limit = 10;
+        const limit = req.query.limit;
         const skip = (page - 1) * limit;
-        const word = req.query.word;
+        const word = req.query.search;
         const staffList = await Staff.find({
           status: { $ne: 2 },
           $or: [
@@ -571,11 +571,13 @@ class adminService {
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit);
-        const staffCount = await Staff.countDocuments({ status: { $ne: 2 },
+        const staffCount = await Staff.countDocuments({
+          status: { $ne: 2 },
           $or: [
             { name: { $regex: new RegExp(word, "i") } },
             { email: { $regex: new RegExp(word, "i") } },
-          ], })
+          ],
+        })
 
         resolve({
           code: CONFIG.SUCCESS_CODE,

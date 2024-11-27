@@ -729,12 +729,16 @@ class adminService {
   sendEmailForgotPasswordforAdmin(req, res) {
     return new Promise(async function (resolve, reject) {
       try {
+        console.log("step 1");
+
         const otp = '12345';
         const checkAdmin = await Admin.findOneAndUpdate(
           { email: req.body.email, status: { $ne: 2 } },
           { otp: otp },
           { new: true }
         );
+        console.log("step 2");
+
         if (!checkAdmin) {
           return reject({
             code: CONFIG.ERROR_CODE,
@@ -787,6 +791,10 @@ class adminService {
         //     });
         //   }
         // });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.OTP_SUCCESS,
+        });
 
       } catch (error) {
         return reject({

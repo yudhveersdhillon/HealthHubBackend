@@ -144,7 +144,7 @@ let appConfig = {
   STAFF_SUCCESSFUL_LOGIN: "Staff Login Successfull",
   SUCCESS_DOCTOR_PASSWORD_UPDATED: "Doctor password updated Successfully",
   SUCCESS_STAFF_PASSWORD_UPDATED:"Staff password changed Successfully",
-  SUPERADMIN_SUCCESSFUL_LOGIN:"Super Admin login Successfull"
+  SUPERADMIN_SUCCESSFUL_LOGIN:"Super Admin login Successfully"
 
 };
 

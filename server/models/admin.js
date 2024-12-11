@@ -3,6 +3,7 @@ const CONFIG = require("../config/appConfig");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { subscribe } = require("../v1/routes");
 
 const adminSchema = new mongoose.Schema(
     {
@@ -11,7 +12,6 @@ const adminSchema = new mongoose.Schema(
         },
         address: {
             type: String,
-
         },
         contactNumber: {
             type: String,
@@ -42,10 +42,29 @@ const adminSchema = new mongoose.Schema(
         password: {
             type: String,
         },
+        ipd: {
+            type: Boolean,
+            default: false
+        },
+        pharmacy: {
+            type: Boolean,
+            default: false
+        },
+        lab: {
+            type: Boolean,
+            default: false
+        },
+        subscription: {
+            type: Boolean,
+            default: false
+        },
+        subscriptionDateExpiry: {
+            type: Date,
+        },
         otp: {
             type: Number,
             default: 0,
-          },
+        },
         doctors: [
             {
                 type: mongoose.Schema.Types.ObjectId,

@@ -343,7 +343,7 @@ class superAdminService {
                 })
                     .sort({ createdAt: -1 })
                     .skip(skip)
-                    .limit(limit);
+                    .limit(limit).populate('hospitalId');
                 const doctorCount = await Doctor.countDocuments({
                     status: { $ne: 2 },
                     $or: [
@@ -576,7 +576,7 @@ class superAdminService {
                 })
                     .sort({ createdAt: -1 })
                     .skip(skip)
-                    .limit(limit);
+                    .limit(limit).populate('hospitalId');
                 const staffCount = await Staff.countDocuments({
                     status: { $ne: 2 },
                     $or: [

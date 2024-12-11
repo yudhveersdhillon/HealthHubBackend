@@ -45,7 +45,7 @@ const staffSchema = new mongoose.Schema(
     },
     hospitalId: {
       type: Schema.Types.ObjectId,
-      ref: "Hospital",  // Reference to the hospital where the staff member is working
+      ref: "Admin",  // Reference to the hospital where the staff member is working
     },
     department: {
       type: String,

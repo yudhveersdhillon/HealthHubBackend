@@ -11,7 +11,6 @@ const inpatientSchema = new mongoose.Schema(
         doctorId: {
             type: Schema.Types.ObjectId,
             ref: "Doctor", // Reference to the Doctor model
-            required: true, // Admitting doctor
         },
         admissionDate: {
             type: Date,
@@ -19,11 +18,9 @@ const inpatientSchema = new mongoose.Schema(
         },
         roomNumber: {
             type: String,
-            required: true, // Room assigned for the patient
         },
         bedNumber: {
             type: String,
-            required: true, // Bed assigned within the room
         },
         status: {
             type: String,
@@ -32,21 +29,21 @@ const inpatientSchema = new mongoose.Schema(
         },
         admissionReason: {
             type: String,
-            required: true, // Reason for hospitalization (e.g., surgery, treatment, observation)
+            // Reason for hospitalization (e.g., surgery, treatment, observation)
         },
         medicalHistory: {
             type: String,
-            required: false, // Optional medical history or remarks related to admission
+            // Optional medical history or remarks related to admission
         },
         notes: {
             type: String,
-            required: false, // Additional notes or instructions for the care team
+            // Additional notes or instructions for the care team
         },
 
         createdBy: {
             type: Schema.Types.ObjectId,
             ref: "User", // Reference to the hospital admin or staff who created the admission record
-            required: true,
+
         },
     },
     {

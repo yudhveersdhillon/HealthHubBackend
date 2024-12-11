@@ -5,12 +5,10 @@ const hospitalServiceSchema = new mongoose.Schema(
     {
         serviceName: {
             type: String,
-            required: true, // Name of the service (e.g., "X-ray", "Blood Test")
         },
         serviceType: {
             type: String,
             enum: ["diagnostic", "therapy", "surgery", "supportive", "other"],
-            required: true, // Category of the service (e.g., Diagnostic, Therapy)
         },
         description: {
             type: String,
@@ -18,7 +16,6 @@ const hospitalServiceSchema = new mongoose.Schema(
         },
         cost: {
             type: Number,
-            required: true, // Cost of the service
         },
         availability: {
             type: String,

@@ -281,6 +281,57 @@ class adminController {
       });
   }
 
+  adminPatientPrescriptionRegister(req, res) {
+    adminService
+      .adminPatientPrescriptionRegister(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  getAllPatientPrescriptionList(req, res) {
+    adminService
+      .getAllPatientPrescriptionList(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  getPatientPrescriptionbyId(req, res) {
+    adminService
+      .getPatientPrescriptionbyId(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  updatePatientPrescription(req, res) {
+    adminService
+      .updatePatientPrescription(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  deletePrescriptionVitals(req, res) {
+    adminService
+      .deletePrescriptionVitals(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
 
 
   sendEmailForgotPasswordforAdmin(req, res) {

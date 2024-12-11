@@ -72,6 +72,19 @@ route.put(
 );
 route.delete("/vitals/patient/delete/:id", authCheck, adminRepo.deletePatientVitals);
 
+// Add Prescription
+
+route.post("/prescription/patient/add", adminRepo.adminPatientPrescriptionRegister);
+route.get("/prescription/patient/list", authCheck, adminRepo.getAllPatientPrescriptionList);
+route.get("/prescription/patient/list/:id", authCheck, adminRepo.getPatientPrescriptionbyId);
+route.put(
+    "/prescription/patient/update/:id",
+    authCheck,
+    adminRepo.updatePatientPrescription
+);
+route.delete("/prescription/patient/delete/:id", authCheck, adminRepo.deletePrescriptionVitals);
+
+
 
 //Forgot Password
 

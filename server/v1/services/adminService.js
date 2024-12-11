@@ -9,6 +9,7 @@ const Doctor = require("../../models/doctor");
 const Staff = require("../../models/staff");
 const Patient = require("../../models/patient");
 const PatientVitals = require("../../models/vitals");
+const PatientPrescription = require("../../models/prescription");
 
 const User = require("../../models/staff");
 const mongoose = require("mongoose");
@@ -1113,7 +1114,7 @@ class adminService {
         }
         let patientVitalsData = req.body;
 
-        await Patient.updateOne(
+        await PatientVitals.updateOne(
           { _id: patientVitalId },
           { $set: patientVitalsData },
           { new: true, upsert: true }
@@ -1160,6 +1161,236 @@ class adminService {
     });
   }
 
+  adminPatientPrescriptionRegister(req, res) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var patientPrescriptionData = req.body;
+        try {
+          let patientPrescriptionInstance = new PatientPrescription(patientPrescriptionData);
+          const result = await patientPrescriptionInstance.save();
+          const data = JSON.parse(JSON.stringify(result));
+
+          resolve({
+            code: CONFIG.SUCCESS_CODE,
+            message: CONFIG.SUCCESS_PATIENT_PRESCRIPTION_CREATION,
+            data: data,
+          });
+
+        } catch (err) {
+          console.error("Database error:", err.message);
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: err.message,
+          });
+        }
+
+      } catch (err) {
+        console.error("Unexpected error:", err.message);
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: err.message,
+        });
+      }
+    });
+
+  }
+
+  getAllPatientPrescriptionList(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = req.query.limit;
+        const skip = (page - 1) * limit;
+        const word = req.query.search;
+        const patientId = req.query.patientId;
+        const patientPrescriptionList = await PatientPrescription.aggregate([
+          {
+            $match: {
+              status: { $ne: 2 },
+              patientId: patientId
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients', // Assuming your patient collection is named 'patients'
+              localField: 'patientId',
+              foreignField: '_id',
+              as: 'patientDetails',
+            }
+          },
+          {
+            $unwind: '$patientDetails',
+          },
+          {
+            $match: {
+              $or: [
+                { 'patientDetails.firstName': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.email': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.phone': { $regex: new RegExp(word, 'i') } },
+              ]
+            }
+          },
+          {
+            $sort: { createdAt: -1 }
+          },
+          {
+            $skip: skip
+          },
+          {
+            $limit: limit
+          }
+        ]);
+
+        const patientPrescriptionCount = await PatientPrescription.aggregate([
+          {
+            $match: {
+              status: { $ne: 2 },
+              patientId: patientId
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients',
+              localField: 'patientId',
+              foreignField: '_id',
+              as: 'patientDetails',
+            }
+          },
+          {
+            $unwind: '$patientDetails',
+          },
+          {
+            $match: {
+              $or: [
+                { 'patientDetails.firstName': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.email': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.phone': { $regex: new RegExp(word, 'i') } },
+              ]
+            }
+          },
+          {
+            $count: 'total'
+          }
+        ]);
+
+
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_PATIENT_PRESCRIPTION_LIST,
+          data: { patientPrescriptionList, patientPrescriptionCount }
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  getPatientPrescriptionbyId(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientPrescriptionId = req.params.id;
+        // Validate adminId
+        if (!patientPrescriptionId) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ID_NOT_CORRECT,
+          });
+        }
+        // Check if adminId is a valid ObjectId
+        if (!patientPrescriptionId || !mongoose.Types.ObjectId.isValid(patientPrescriptionId)) {
+          reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ID_NOT_CORRECT,
+          });
+          return;
+        }
+        const patientPrescription = await PatientPrescription.findOne({
+          _id: patientPrescriptionId,
+          status: { $ne: 2 }
+        });
+
+        if (!patientPrescription) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_PRESCRIPTION_NOT_FOUND,
+          });
+        }
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_PATIENT_PRESCRIPTION_RETRIEVAL,
+          data: patientPrescription,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+  updatePatientPrescription(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientPrescriptionId = req.params.id;
+        const patientPrescription = await PatientPrescription.findOne({ _id: patientPrescriptionId });
+        if (!patientPrescription) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_PRESCRIPTION_NOT_FOUND,
+          });
+        }
+        let patientPrescriptionData = req.body;
+
+        await PatientPrescription.updateOne(
+          { _id: patientPrescriptionId },
+          { $set: patientPrescriptionData },
+          { new: true, upsert: true }
+        );
+        const updatePatientPrescription = await PatientPrescription.findOne({ _id: patientPrescriptionId });
+
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_PATIENT_PRESCRIPTION_UPDATE,
+          data: updatePatientPrescription,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  deletePrescriptionVitals(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientPrescriptionId = req.params.id;
+        const patientVitals = await PatientPrescription.findOne({ _id: patientPrescriptionId });
+        if (!patientVitals) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_PRESCRIPTION_NOT_FOUND,
+          });
+        }
+        await PatientPrescription.updateOne({ _id: patientPrescriptionId }, { status: 2 }, { new: true });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_PATIENT_PRESCRIPTION_DELETED,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
 
 
   sendEmailForgotPasswordforAdmin(req, res) {

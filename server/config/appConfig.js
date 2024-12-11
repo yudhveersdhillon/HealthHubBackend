@@ -158,7 +158,13 @@ let appConfig = {
   SUCCESS_CODE_PATIENT_VITAL_RETRIEVAL: "Patient vitals found Successfully",
   SUCCESS_PATIENT_VITALS_UPDATE: "Patient vitals updated Successfully",
   SUCCESS_CODE_PATIENT_VITALS_DELETED: "Patient vitals deleted Successfully ",
-  SUCCESS_CODE_ADMIN_LIST_RETRIEVAL:"Admin list Retrieved Successfully"
+  SUCCESS_CODE_ADMIN_LIST_RETRIEVAL: "Admin list Retrieved Successfully",
+  SUCCESS_PATIENT_PRESCRIPTION_CREATION: "Patient Prescription created Successfully",
+  SUCCESS_PATIENT_PRESCRIPTION_LIST: "Patient Prescription list Retrieved Successfully",
+  PATIENT_PRESCRIPTION_NOT_FOUND: "Patient Prescription not found",
+  SUCCESS_CODE_PATIENT_PRESCRIPTION_RETRIEVAL: "Patient Prescription Retrieved Successfully",
+  SUCCESS_PATIENT_PRESCRIPTION_UPDATE: "Patient Prescription Updated Successfully",
+  SUCCESS_CODE_PATIENT_PRESCRIPTION_DELETED: "Patient Prescription Deleted Successfully"
 
 };
 

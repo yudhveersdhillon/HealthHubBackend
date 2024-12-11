@@ -31,7 +31,7 @@ const adminSchema = new mongoose.Schema(
         departments: [{
             type: String, // You can list departments like Cardiology, Orthopedics, etc.
         }],
-       
+
         profileImage: {
             type: String
         },
@@ -77,7 +77,7 @@ const adminSchema = new mongoose.Schema(
             type: Number,
             default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
             index: true,
-          },
+        },
     },
     {
         timestamps: true,

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const CONFIG = require("../config/appConfig");
 
 const superAdminSchema = new mongoose.Schema(
     {

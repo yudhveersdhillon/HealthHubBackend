@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const CONFIG = require("../config/appConfig");
 
 // Vitals Schema for capturing daily measurements
 const vitalsSchema = new mongoose.Schema(

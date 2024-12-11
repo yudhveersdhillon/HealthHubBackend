@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const CONFIG = require("../config/appConfig");
 
 // Instructions Schema for storing predefined instructions
 const instructionsSchema = new mongoose.Schema(

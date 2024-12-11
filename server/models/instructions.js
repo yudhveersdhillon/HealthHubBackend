@@ -1,0 +1,30 @@
+var mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+// Instructions Schema for storing predefined instructions
+const instructionsSchema = new mongoose.Schema(
+    {
+        instructionName: {
+            type: String,
+            required: true, // Instruction name is mandatory
+            unique: true,  // Ensures the instruction name is unique
+            trim: true, // Removes extra spaces
+        },
+        instructionText: {
+            type: String,
+            trim: true, // Removes extra spaces
+        },
+        category: {
+            type: String,
+            enum: ['general', 'medication', 'diet', 'exercise', 'post-op', 'other'],
+            default: 'general', // Default to 'general' category
+        }
+    },
+    {
+        timestamps: true, // Automatically adds createdAt and updatedAt
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true },
+    }
+);
+
+module.exports = mongoose.model("Instructions", instructionsSchema);

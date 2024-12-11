@@ -23,7 +23,6 @@ route.delete("/delete/:id", authCheck, adminRepo.deleteAdmin);
 
 // Doctor CRUD
 
-
 route.post("/doctor/register", uploadAdminImage.single("profileImage"), adminRepo.adminDoctorRegister);
 route.get("/doctor/list", authCheck, adminRepo.getAllDoctorList);
 route.get("/doctor/list/:id", authCheck, adminRepo.getDoctorbyId);
@@ -37,7 +36,6 @@ route.delete("/doctor/delete/:id", authCheck, adminRepo.deleteDoctor);
 
 
 //Staff CRUD
-
 
 route.post("/staff/register", uploadAdminImage.single("profileImage"), adminRepo.adminStaffRegister);
 route.get("/staff/list", authCheck, adminRepo.getAllStaffList);

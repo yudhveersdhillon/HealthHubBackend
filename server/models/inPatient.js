@@ -22,7 +22,7 @@ const inpatientSchema = new mongoose.Schema(
         bedNumber: {
             type: String,
         },
-        status: {
+        patientadmissionstatus: {
             type: String,
             enum: ["admitted", "discharged", "pending"], // Status of the patient
             default: "admitted", // Default status is "admitted"
@@ -45,6 +45,11 @@ const inpatientSchema = new mongoose.Schema(
             ref: "User", // Reference to the hospital admin or staff who created the admission record
 
         },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true,

@@ -11,7 +11,9 @@ const patientSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,  // Ensure the email is unique
+    },
+    uniquePatientId: {
+      type: String,
     },
     phone: {
       type: String,
@@ -53,14 +55,15 @@ const patientSchema = new mongoose.Schema(
     insurancePolicyNumber: {
       type: String,  // Insurance policy number (if applicable)
     },
-    status: {
-      type: String,
-      enum: ["active", "inactive", "suspended"],  // Patient's account status
-      default: "active",  // Default status is active
-    },
+    
     createdAt: {
       type: Date,
       default: Date.now,  // Automatically sets the date when the patient is created
+    },
+    status: {
+      type: Number,
+      default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+      index: true,
     },
   },
   {

@@ -38,17 +38,18 @@ const prescriptionSchema = new mongoose.Schema(
             type: Date,
             default: Date.now, // Automatically records the date when the prescription is made
         },
-        status: {
-            type: String,
-            enum: ["active", "completed", "cancelled"], // Status of the prescription
-            default: "active", // Default status
-        },
+      
         nextVisitDate: {
             type: Date,
         },
         nextVisitRemarks: {
             type: String,
         },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true,

@@ -7,6 +7,9 @@ const moment = require("moment");
 const Admin = require("../../models/admin");
 const Doctor = require("../../models/doctor");
 const Staff = require("../../models/staff");
+const Patient = require("../../models/patient");
+const PatientVitals = require("../../models/vitals");
+
 const User = require("../../models/staff");
 const mongoose = require("mongoose");
 const fs = require("fs");
@@ -725,6 +728,439 @@ class adminService {
       }
     });
   }
+
+
+  adminPatientRegister(req, res) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var patientData = req.body;
+        try {
+          const exists = await Patient.findOne({ firstName: staffData.patientData.toLowerCase(), phone: patientData.phone, status: { $ne: 2 } });
+          if (exists) {
+            return reject({
+              code: CONFIG.ERROR_CODE,
+              message: CONFIG.SAME_PATIENT_ALREADY_EXISTS,
+            });
+          }
+
+          let patientInstance = new Patient(patientData);
+          const result = await patientInstance.save();
+          const data = JSON.parse(JSON.stringify(result));
+
+          resolve({
+            code: CONFIG.SUCCESS_CODE,
+            message: CONFIG.SUCCESS_PATIENT_CREATION,
+            data: data,
+          });
+
+        } catch (err) {
+          console.error("Database error:", err.message);
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: err.message,
+          });
+        }
+
+      } catch (err) {
+        console.error("Unexpected error:", err.message);
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: err.message,
+        });
+      }
+    });
+
+  }
+
+
+  getAllPatientList(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = req.query.limit;
+        const skip = (page - 1) * limit;
+        const word = req.query.search;
+        const patientList = await Patient.find({
+          status: { $ne: 2 },
+          $or: [
+            { firstName: { $regex: new RegExp(word, "i") } },
+            { email: { $regex: new RegExp(word, "i") } },
+            { phone: { $regex: new RegExp(word, "i") } },
+          ],
+        })
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit);
+        const patientCount = await Patient.countDocuments({
+          status: { $ne: 2 },
+          $or: [
+            { firstName: { $regex: new RegExp(word, "i") } },
+            { email: { $regex: new RegExp(word, "i") } },
+            { phone: { $regex: new RegExp(word, "i") } },
+          ],
+        })
+
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_STAFF_LIST,
+          data: { patientList, patientCount }
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+  getPatientbyId(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientId = req.params.id;
+        // Validate adminId
+        if (!patientId) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_ID_MISSED,
+          });
+        }
+        // Check if adminId is a valid ObjectId
+        if (!patientId || !mongoose.Types.ObjectId.isValid(patientId)) {
+          reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ID_NOT_CORRECT,
+          });
+          return;
+        }
+        const patient = await Patient.findOne({
+          _id: patientId,
+          status: { $ne: 2 }
+        });
+
+        if (!patient) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_NOT_FOUND,
+          });
+        }
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_PATIENT_RETRIEVAL,
+          data: patient,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+
+
+  updatePatient(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientId = req.params.id;
+        const patient = await Patient.findOne({ _id: patientId });
+        if (!patient) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_NOT_FOUND,
+          });
+        }
+        let patientData = req.body;
+
+
+        await Patient.updateOne(
+          { _id: patientId },
+          { $set: patientData },
+          { new: true, upsert: true }
+        );
+        const updatePatient = await Patient.findOne({ _id: patientId });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_PATIENT_UPDATE,
+          data: updatePatient,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+  deletePatient(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientId = req.params.id;
+        const patient = await Patient.findOne({ _id: patientId });
+        if (!patient) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_NOT_FOUND,
+          });
+        }
+
+        await Patient.updateOne({ _id: patientId }, { status: 2 }, { new: true });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_PATIENT_DELETED,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  adminPatientVitalsRegister(req, res) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var patientVitalsData = req.body;
+        try {
+          // const exists = await PatientVitals.findOne({ patientId: patientVitalsData.patientId,vitalsDate:Date.now, status: { $ne: 2 } });
+          // if (exists) {
+          //   return reject({
+          //     code: CONFIG.ERROR_CODE,
+          //     message: CONFIG.SAME_VITALS_ALREADY_EXISTS,
+          //   });
+          // }
+
+          let patientVitalsInstance = new PatientVitals(patientVitalsData);
+          const result = await patientVitalsInstance.save();
+          const data = JSON.parse(JSON.stringify(result));
+
+          resolve({
+            code: CONFIG.SUCCESS_CODE,
+            message: CONFIG.SUCCESS_PATIENT_VITALS_CREATION,
+            data: data,
+          });
+
+        } catch (err) {
+          console.error("Database error:", err.message);
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: err.message,
+          });
+        }
+
+      } catch (err) {
+        console.error("Unexpected error:", err.message);
+        return reject({
+          code: CONFIG.ERROR_CODE,
+          message: err.message,
+        });
+      }
+    });
+
+  }
+
+  getAllPatientVitalsList(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = req.query.limit;
+        const skip = (page - 1) * limit;
+        const word = req.query.search;
+        const patientVitalsList = await PatientVitals.aggregate([
+          {
+            $match: {
+              status: { $ne: 2 },
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients', // Assuming your patient collection is named 'patients'
+              localField: 'patientId',
+              foreignField: '_id',
+              as: 'patientDetails',
+            }
+          },
+          {
+            $unwind: '$patientDetails',
+          },
+          {
+            $match: {
+              $or: [
+                { 'patientDetails.firstName': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.email': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.phone': { $regex: new RegExp(word, 'i') } },
+              ]
+            }
+          },
+          {
+            $sort: { createdAt: -1 }
+          },
+          {
+            $skip: skip
+          },
+          {
+            $limit: limit
+          }
+        ]);
+
+        const patientVitalsCount = await PatientVitals.aggregate([
+          {
+            $match: {
+              status: { $ne: 2 },
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients',
+              localField: 'patientId',
+              foreignField: '_id',
+              as: 'patientDetails',
+            }
+          },
+          {
+            $unwind: '$patientDetails',
+          },
+          {
+            $match: {
+              $or: [
+                { 'patientDetails.firstName': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.email': { $regex: new RegExp(word, 'i') } },
+                { 'patientDetails.phone': { $regex: new RegExp(word, 'i') } },
+              ]
+            }
+          },
+          {
+            $count: 'total'
+          }
+        ]);
+
+
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_PATIENT_VITALS_LIST,
+          data: { patientVitalsList, patientVitalsCount }
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
+  getPatientVitalsbyId(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientVitalId = req.params.id;
+        // Validate adminId
+        if (!patientVitalId) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ID_NOT_CORRECT,
+          });
+        }
+        // Check if adminId is a valid ObjectId
+        if (!patientVitalId || !mongoose.Types.ObjectId.isValid(patientVitalId)) {
+          reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.ID_NOT_CORRECT,
+          });
+          return;
+        }
+        const patientvital = await PatientVitals.findOne({
+          _id: patientVitalId,
+          status: { $ne: 2 }
+        });
+
+        if (!patientvital) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_VITALS_NOT_FOUND,
+          });
+        }
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_PATIENT_VITAL_RETRIEVAL,
+          data: patientvital,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  updatePatientVitals(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientVitalId = req.params.id;
+        const patientVitals = await PatientVitals.findOne({ _id: patientVitalId });
+        if (!patientVitals) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_VITALS_NOT_FOUND,
+          });
+        }
+        let patientVitalsData = req.body;
+
+        await Patient.updateOne(
+          { _id: patientVitalId },
+          { $set: patientVitalsData },
+          { new: true, upsert: true }
+        );
+        const updatePatientVitals = await PatientVitals.findOne({ _id: patientVitalId });
+
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_PATIENT_VITALS_UPDATE,
+          data: updatePatientVitals,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+  deletePatientVitals(req, res) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const patientVitalId = req.params.id;
+        const patientVitals = await PatientVitals.findOne({ _id: patientVitalId });
+        if (!patientVitals) {
+          return reject({
+            code: CONFIG.ERROR_CODE,
+            message: CONFIG.PATIENT_VITALS_NOT_FOUND,
+          });
+        }
+
+        await PatientVitals.updateOne({ _id: patientVitalId }, { status: 2 }, { new: true });
+        resolve({
+          code: CONFIG.SUCCESS_CODE,
+          message: CONFIG.SUCCESS_CODE_PATIENT_VITALS_DELETED,
+        });
+      } catch (error) {
+        reject({
+          code: CONFIG.ERROR_CODE,
+          message: error.message,
+        });
+      }
+    });
+  }
+
+
 
   sendEmailForgotPasswordforAdmin(req, res) {
     return new Promise(async function (resolve, reject) {

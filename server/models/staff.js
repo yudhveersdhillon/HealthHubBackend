@@ -30,11 +30,7 @@ const staffSchema = new mongoose.Schema(
     phone: {
       type: String,
     },
-    status: {
-      type: Number,
-      default: CONFIG.ACTIVE_STATUS,  // Default to active status (1)
-      index: true,
-    },
+  
     otp: {
       type: Number,
       default: 0,
@@ -56,6 +52,11 @@ const staffSchema = new mongoose.Schema(
     adminId: {
       type: Schema.Types.ObjectId,
       ref: "Admin",  // Reference to the admin who registered the staff member
+    },
+    status: {
+      type: Number,
+      default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+      index: true,
     },
   },
   {

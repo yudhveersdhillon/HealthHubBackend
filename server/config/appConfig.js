@@ -143,8 +143,21 @@ let appConfig = {
   DOCTOR_SUCCESSFUL_LOGIN: "Doctor Login Successfully",
   STAFF_SUCCESSFUL_LOGIN: "Staff Login Successfull",
   SUCCESS_DOCTOR_PASSWORD_UPDATED: "Doctor password updated Successfully",
-  SUCCESS_STAFF_PASSWORD_UPDATED:"Staff password changed Successfully",
-  SUPERADMIN_SUCCESSFUL_LOGIN:"Super Admin login Successfully"
+  SUCCESS_STAFF_PASSWORD_UPDATED: "Staff password changed Successfully",
+  SUPERADMIN_SUCCESSFUL_LOGIN: "Super Admin login Successfully",
+  SAME_PATIENT_ALREADY_EXISTS: "Same Patient already exists",
+  SUCCESS_PATIENT_CREATION: "Patient created Successfully",
+  PATIENT_ID_MISSED: "Patient Id missing",
+  PATIENT_NOT_FOUND: "Patient not found",
+  SUCCESS_CODE_PATIENT_RETRIEVAL: "Patient Retrieved Successfully",
+  SUCCESS_PATIENT_UPDATE: "Patient updated Successfully",
+  SUCCESS_CODE_PATIENT_DELETED: "Patient deleted Successfully",
+  SUCCESS_PATIENT_VITALS_LIST: "Patient vitals Retrieved Successfully",
+  SUCCESS_PATIENT_VITALS_CREATION: "Patient vitals created Successfully",
+  PATIENT_VITALS_NOT_FOUND: "Patient vitals not found",
+  SUCCESS_CODE_PATIENT_VITAL_RETRIEVAL: "Patient vitals found Successfully",
+  SUCCESS_PATIENT_VITALS_UPDATE: "Patient vitals updated Successfully",
+  SUCCESS_CODE_PATIENT_VITALS_DELETED: "Patient vitals deleted Successfully "
 
 };
 

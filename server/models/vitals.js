@@ -9,7 +9,7 @@ const vitalsSchema = new mongoose.Schema(
             ref: "Patient", // Reference to the Patient model
             required: true,
         },
-        date: {
+        vitalsDate: {
             type: Date,
             default: Date.now, // Default to the current date
         },
@@ -37,11 +37,16 @@ const vitalsSchema = new mongoose.Schema(
         comments: {
             type: String, // Optional comments for additional notes by the healthcare provider
         },
-        status: {
+        patientstatus: {
             type: String,
             enum: ["normal", "elevated", "critical"], // Status of vitals assessment
             default: "normal", // Default status
         },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true, // Automatically adds createdAt and updatedAt

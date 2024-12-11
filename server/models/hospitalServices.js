@@ -22,6 +22,11 @@ const hospitalServiceSchema = new mongoose.Schema(
             enum: ["available", "unavailable"],
             default: "available", // Whether the service is currently available
         },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true,

@@ -29,6 +29,11 @@ const hospitalFacilitySchema = new mongoose.Schema(
       type: String,
       required: false, // Any additional notes about the facility
     },
+    status: {
+      type: Number,
+      default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+      index: true,
+    },
   },
   {
     timestamps: true,

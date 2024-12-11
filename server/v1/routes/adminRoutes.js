@@ -48,6 +48,30 @@ route.put(
 );
 route.delete("/staff/delete/:id", authCheck, adminRepo.deleteStaff);
 
+// Patient register by admin
+
+route.post("/patient/register", adminRepo.adminPatientRegister);
+route.get("/patient/list", authCheck, adminRepo.getAllPatientList);
+route.get("/patient/list/:id", authCheck, adminRepo.getPatientbyId);
+route.put(
+    "/patient/update/:id",
+    authCheck,
+    adminRepo.updatePatient
+);
+route.delete("/patient/delete/:id", authCheck, adminRepo.deletePatient);
+
+// Add Patient Vitals
+
+route.post("/vitals/patient/add", adminRepo.adminPatientVitalsRegister);
+route.get("/vitals/patient/list", authCheck, adminRepo.getAllPatientVitalsList);
+route.get("/vitals/patient/list/:id", authCheck, adminRepo.getPatientVitalsbyId);
+route.put(
+    "/vitals/patient/update/:id",
+    authCheck,
+    adminRepo.updatePatientVitals
+);
+route.delete("/vitals/patient/delete/:id", authCheck, adminRepo.deletePatientVitals);
+
 
 //Forgot Password
 

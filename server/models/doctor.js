@@ -56,6 +56,7 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       // Password is not returned in queries by default
     },
+  
   },
   {
     timestamps: true,

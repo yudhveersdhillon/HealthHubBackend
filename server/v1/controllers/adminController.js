@@ -178,6 +178,111 @@ class adminController {
         return res.reject(error.code, error.message);
       });
   }
+
+  adminPatientRegister(req, res) {
+    adminService
+      .adminPatientRegister(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  getAllPatientList(req, res) {
+    adminService
+      .getAllPatientList(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  getPatientbyId(req, res) {
+    adminService
+      .getPatientbyId(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  deletePatient(req, res) {
+    adminService
+      .deletePatient(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  updatePatient(req, res) {
+    adminService
+      .updatePatient(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+  deletePatientVitals(req, res) {
+    adminService
+      .deletePatientVitals(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  adminPatientVitalsRegister(req, res) {
+    adminService
+      .adminPatientVitalsRegister(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  getAllPatientVitalsList(req, res) {
+    adminService
+      .getAllPatientVitalsList(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  getPatientVitalsbyId(req, res) {
+    adminService
+      .getPatientVitalsbyId(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+  updatePatientVitals(req, res) {
+    adminService
+      .updatePatientVitals(req, res)
+      .then((result) => {
+        return res.success(result.code, result.message, result.data);
+      })
+      .catch((error) => {
+        return res.reject(error.code, error.message);
+      });
+  }
+
+
+
   sendEmailForgotPasswordforAdmin(req, res) {
     adminService
       .sendEmailForgotPasswordforAdmin(req, res)

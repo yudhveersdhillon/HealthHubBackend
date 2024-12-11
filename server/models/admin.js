@@ -31,10 +31,7 @@ const adminSchema = new mongoose.Schema(
         departments: [{
             type: String, // You can list departments like Cardiology, Orthopedics, etc.
         }],
-        status: {
-            type: Number,
-            default: 1, // 1 = active, 0 = inactive
-        },
+       
         profileImage: {
             type: String
         },
@@ -76,6 +73,11 @@ const adminSchema = new mongoose.Schema(
                 ref: "Staff", // Assuming a Staff model exists
             },
         ],
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true,

@@ -71,6 +71,11 @@ const dischargeSchema = new mongoose.Schema(
             type: Number,
             required: true, // Total cost for the patient's treatment and stay
         },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true,

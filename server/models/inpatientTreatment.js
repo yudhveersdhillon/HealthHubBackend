@@ -79,7 +79,13 @@ const inpatientTreatmentSchema = new mongoose.Schema(
             type: Date,
             required: false, // Date for follow-up (if applicable)
         },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
+    
     {
         timestamps: true,
         toObject: { virtuals: true },

@@ -18,7 +18,12 @@ const instructionsSchema = new mongoose.Schema(
             type: String,
             enum: ['general', 'medication', 'diet', 'exercise', 'post-op', 'other'],
             default: 'general', // Default to 'general' category
-        }
+        },
+        status: {
+            type: Number,
+            default: CONFIG.ACTIVE_STATUS, // 0 = inactive, 1 = active, 2 = deleted
+            index: true,
+          },
     },
     {
         timestamps: true, // Automatically adds createdAt and updatedAt

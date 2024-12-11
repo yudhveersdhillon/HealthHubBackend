@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const CONFIG = require("../config/appConfig");
 
 const inpatientSchema = new mongoose.Schema(
     {

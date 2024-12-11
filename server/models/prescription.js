@@ -18,21 +18,21 @@ const prescriptionSchema = new mongoose.Schema(
                     type: String,
                 },
                 dose: {
-                    type: String,
+                    type: String, // Dosage instructions (e.g., "10mg")
                 },
                 medicineType: {
-                    type: String,// cap,syrup,injection
+                    type: String, // Cap,syrup,injection
                 },
                 dayFrequency: {
-                    type: String,
+                    type: String, // Dosage instructions (e.g."2 times a day")
                 },
                 duration: {
-                    type: String,
+                    type: String, // Duration of medicine usage (e.g., "7 days", "1 month")
                 },
             },
         ],
         comments: {
-            type: String,
+            type: String, // Optional comments section for doctor’s additional notes
         },
         datePrescribed: {
             type: Date,

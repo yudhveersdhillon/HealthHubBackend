@@ -5,41 +5,34 @@ const patientSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true, // Patient's first name
     },
     lastName: {
       type: String,
-      required: true, // Patient's last name
     },
     email: {
       type: String,
-      required: true,
       unique: true,  // Ensure the email is unique
     },
     phone: {
       type: String,
-      required: true, // Patient's contact number
     },
     dateOfBirth: {
       type: Date,
-      required: true, // Patient's date of birth
     },
     gender: {
       type: String,
       enum: ["male", "female", "other"],  // Gender options
-      required: true,
     },
     address: {
       type: String,
-      required: true, // Patient's address
     },
     medicalHistory: {
       type: String,
-      required: false,  // Optional field for patient's medical history
+      // Optional field for patient's medical history
     },
     allergies: {
       type: [String], // Array of allergies if applicable
-      required: false,
+
     },
     bloodGroup: {
       type: String, // Patient's blood group (optional)
@@ -47,11 +40,11 @@ const patientSchema = new mongoose.Schema(
     emergencyContact: {
       name: {
         type: String,  // Name of emergency contact
-        required: false,
+
       },
       phone: {
         type: String,  // Phone number of emergency contact
-        required: false,
+
       },
     },
     insuranceProvider: {

@@ -15,7 +15,7 @@ const prescriptionSchema = new mongoose.Schema(
         medicines: [
             {
                 name: {
-                    type: String,
+                    type: String, // Name of the Medicne
                 },
                 dose: {
                     type: String, // Dosage instructions (e.g., "10mg")

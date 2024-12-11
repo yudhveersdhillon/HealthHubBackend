@@ -24,31 +24,31 @@ route.delete("/admin/delete/:id", authCheck, superAdminRepo.deleteAdmin);
 // Doctor CRUD
 
 
-route.post("/doctor/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminDoctorRegister);
-route.get("/doctor/list", authCheck, superAdminRepo.getAllDoctorList);
-route.get("/doctor/list/:id", authCheck, superAdminRepo.getDoctorbyId);
+route.post("/hospital/doctor/register", uploadAdminImage.single("profileImage"), superAdminRepo.SuperadminDoctorRegister);
+route.get("/hospital/alldoctor/list", authCheck, superAdminRepo.getAllDoctorList);
+route.get("/hospital/doctor/list/:id", authCheck, superAdminRepo.getDoctorbyId);
 route.put(
-    "/doctor/update/:id",
+    "/hospital/doctor/update/:id",
     authCheck,
     uploadAdminImage.single("profileImage"),
     superAdminRepo.updateDoctor
 );
-route.delete("/doctor/delete/:id", authCheck, superAdminRepo.deleteDoctor);
+route.delete("/hospital/doctor/delete/:id", authCheck, superAdminRepo.deleteDoctor);
 
 
 //Staff CRUD
 
 
-route.post("/staff/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminStaffRegister);
-route.get("/staff/list", authCheck, superAdminRepo.getAllStaffList);
-route.get("/staff/list/:id", authCheck, superAdminRepo.getStaffbyId);
+route.post("/hospital/staff/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminStaffRegister);
+route.get("/hospital/staff/list", authCheck, superAdminRepo.getAllStaffList);
+route.get("/hospital/staff/list/:id", authCheck, superAdminRepo.getStaffbyId);
 route.put(
-    "/staff/update/:id",
+    "/hospital/staff/update/:id",
     authCheck,
     uploadAdminImage.single("profileImage"),
     superAdminRepo.updateStaff
 );
-route.delete("/staff/delete/:id", authCheck, superAdminRepo.deleteStaff);
+route.delete("/hospital/staff/delete/:id", authCheck, superAdminRepo.deleteStaff);
 
 
 module.exports = route;

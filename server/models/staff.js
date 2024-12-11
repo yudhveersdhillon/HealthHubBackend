@@ -11,7 +11,7 @@ const staffSchema = new mongoose.Schema(
       required: true, // Name of the staff member
     },
     email: {
-      type: String,      
+      type: String,
     },
     birthdate: {
       type: Date,
@@ -39,18 +39,17 @@ const staffSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-   
     role: {
       type: String,
-      enum: ["receptionist", "nurse","staff" ], // Defining roles for the hospital staff
+      enum: ["receptionist", "nurse", "staff"], // Defining roles for the hospital staff
     },
-    hospital: {
+    hospitalId: {
       type: Schema.Types.ObjectId,
       ref: "Hospital",  // Reference to the hospital where the staff member is working
     },
     department: {
       type: String,
-      required: function() {
+      required: function () {
         return this.role !== 'receptionist';  // Department is required for all roles except receptionist
       },
     },

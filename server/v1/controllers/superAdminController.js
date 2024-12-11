@@ -69,9 +69,9 @@ class superAdminController {
     }
 
 
-    adminDoctorRegister(req, res) {
+    SuperadminDoctorRegister(req, res) {
         superAdminService
-            .adminDoctorRegister(req, res)
+            .SuperadminDoctorRegister(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);
             })
@@ -125,7 +125,7 @@ class superAdminController {
 
     adminStaffRegister
         (req, res) {
-            superAdminService
+        superAdminService
             .adminStaffRegister(req, res)
             .then((result) => {
                 return res.success(result.code, result.message, result.data);

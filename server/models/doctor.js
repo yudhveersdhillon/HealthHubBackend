@@ -28,9 +28,9 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       // Years of experience the doctor has
     },
-    hospital: {
-      type: String,
-      // The hospital where the doctor works
+    hospitalId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin", // Assuming a Doctor model exists
     },
     profileImage: {
       type: String

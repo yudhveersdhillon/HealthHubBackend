@@ -263,7 +263,7 @@ class superAdminService {
         });
     }
 
-    adminDoctorRegister(req, res) {
+    SuperadminDoctorRegister(req, res) {
         return new Promise(async (resolve, reject) => {
             try {
                 var doctorData = req.body;
@@ -332,12 +332,14 @@ class superAdminService {
                 const limit = 10;
                 const skip = (page - 1) * limit;
                 const word = req.query.word;
+                const hospitalId = req.query.hospitalId;
                 const doctorList = await Doctor.find({
                     status: { $ne: 2 },
                     $or: [
                         { name: { $regex: new RegExp(word, "i") } },
                         { email: { $regex: new RegExp(word, "i") } },
                     ],
+                    hospitalId: hospitalId
                 })
                     .sort({ createdAt: -1 })
                     .skip(skip)
@@ -348,6 +350,7 @@ class superAdminService {
                         { name: { $regex: new RegExp(word, "i") } },
                         { email: { $regex: new RegExp(word, "i") } },
                     ],
+                    hospitalId: hospitalId
                 })
 
                 resolve({
@@ -561,12 +564,15 @@ class superAdminService {
                 const limit = 10;
                 const skip = (page - 1) * limit;
                 const word = req.query.word;
+                const hospitalId = req.query.hospitalId;
+
                 const staffList = await Staff.find({
                     status: { $ne: 2 },
                     $or: [
                         { name: { $regex: new RegExp(word, "i") } },
                         { email: { $regex: new RegExp(word, "i") } },
                     ],
+                    hospitalId: hospitalId
                 })
                     .sort({ createdAt: -1 })
                     .skip(skip)
@@ -577,6 +583,7 @@ class superAdminService {
                         { name: { $regex: new RegExp(word, "i") } },
                         { email: { $regex: new RegExp(word, "i") } },
                     ],
+                    hospitalId: hospitalId
                 })
 
                 resolve({

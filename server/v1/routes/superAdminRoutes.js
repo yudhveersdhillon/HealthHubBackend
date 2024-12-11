@@ -12,6 +12,8 @@ let superAdminRepo = new superAdminController();
 
 route.post("/login", superAdminRepo.login);
 route.post("/admin/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminRegister);
+route.get("/admin/list", authCheck, superAdminRepo.getAdminList);
+
 route.get("/admin/list/:id", authCheck, superAdminRepo.getAdminbyId);
 route.put(
     "/admin/update/:id",

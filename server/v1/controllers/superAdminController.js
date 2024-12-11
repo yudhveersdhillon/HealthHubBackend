@@ -25,6 +25,16 @@ class superAdminController {
                 return res.reject(error.code, error.message);
             });
     }
+    getAdminList(req, res) {
+        superAdminService
+            .getAdminList(req, res)
+            .then((result) => {
+                return res.success(result.code, result.message, result.data);
+            })
+            .catch((error) => {
+                return res.reject(error.code, error.message);
+            });
+    }
     getAdminbyId(req, res) {
         superAdminService
             .getAdminById(req, res)

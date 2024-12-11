@@ -126,6 +126,49 @@ class superAdminService {
                 });
         });
     }
+
+
+    getAdminList(req, res) {
+        return new Promise(async function (resolve, reject) {
+            try {
+                const page = parseInt(req.query.page) || 1;
+                const limit = 10;
+                const skip = (page - 1) * limit;
+                const word = req.query.word;
+                const adminList = await Admin.find({
+                    status: { $ne: 2 }
+                }).sort({ createdAt: -1 })
+                    .skip(skip)
+                    .limit(limit);
+
+                if (!adminList.length) {
+                    return reject({
+                        code: CONFIG.ERROR_CODE,
+                        message: CONFIG.ADMIN_NOT_FOUND,
+                    });
+                }
+                const adminCount = await Admin.countDocuments({
+                    status: { $ne: 2 },
+                    $or: [
+                        { name: { $regex: new RegExp(word, "i") } },
+                        { email: { $regex: new RegExp(word, "i") } },
+                        { contactNumber: { $regex: new RegExp(word, "i") } },
+                    ]
+                });
+                resolve({
+                    code: CONFIG.SUCCESS_CODE,
+                    message: CONFIG.SUCCESS_CODE_ADMIN_LIST_RETRIEVAL,
+                    data: { adminList, adminCount }
+                });
+            } catch (error) {
+                reject({
+                    code: CONFIG.ERROR_CODE,
+                    message: error.message,
+                });
+            }
+        });
+    }
+
     getAdminById(req, res) {
         return new Promise(async function (resolve, reject) {
             try {

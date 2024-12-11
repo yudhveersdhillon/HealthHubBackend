@@ -157,7 +157,8 @@ let appConfig = {
   PATIENT_VITALS_NOT_FOUND: "Patient vitals not found",
   SUCCESS_CODE_PATIENT_VITAL_RETRIEVAL: "Patient vitals found Successfully",
   SUCCESS_PATIENT_VITALS_UPDATE: "Patient vitals updated Successfully",
-  SUCCESS_CODE_PATIENT_VITALS_DELETED: "Patient vitals deleted Successfully "
+  SUCCESS_CODE_PATIENT_VITALS_DELETED: "Patient vitals deleted Successfully ",
+  SUCCESS_CODE_ADMIN_LIST_RETRIEVAL:"Admin list Retrieved Successfully"
 
 };
 

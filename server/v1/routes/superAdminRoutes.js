@@ -11,7 +11,7 @@ let superAdminRepo = new superAdminController();
 // Admin CRUD
 
 route.post("/login", superAdminRepo.login);
-route.post("/hospital/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminRegister);
+route.post("/hospital/register", authCheck, uploadAdminImage.single("profileImage"), superAdminRepo.adminRegister);
 route.get("/admin/list", authCheck, superAdminRepo.getAdminList);
 
 route.get("/hospital/list/:id", authCheck, superAdminRepo.getAdminbyId);
@@ -26,7 +26,7 @@ route.delete("/hospital/delete/:id", authCheck, superAdminRepo.deleteAdmin);
 // Doctor CRUD
 
 
-route.post("/hospital/doctor/register", uploadAdminImage.single("profileImage"), superAdminRepo.SuperadminDoctorRegister);
+route.post("/hospital/doctor/register", authCheck, uploadAdminImage.single("profileImage"), superAdminRepo.SuperadminDoctorRegister);
 route.get("/hospital/alldoctor/list", authCheck, superAdminRepo.getAllDoctorList);
 route.get("/hospital/doctor/list/:id", authCheck, superAdminRepo.getDoctorbyId);
 route.put(
@@ -41,7 +41,7 @@ route.delete("/hospital/doctor/delete/:id", authCheck, superAdminRepo.deleteDoct
 //Staff CRUD
 
 
-route.post("/hospital/staff/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminStaffRegister);
+route.post("/hospital/staff/register", authCheck, uploadAdminImage.single("profileImage"), superAdminRepo.adminStaffRegister);
 route.get("/hospital/staff/list", authCheck, superAdminRepo.getAllStaffList);
 route.get("/hospital/staff/list/:id", authCheck, superAdminRepo.getStaffbyId);
 route.put(

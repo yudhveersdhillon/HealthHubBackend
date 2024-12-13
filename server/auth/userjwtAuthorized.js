@@ -52,8 +52,8 @@ module.exports = (req, res, next) => {
           req.user = user;
           next();
         });
-      }else {
-        
+      } else {
+
         User.findOne({ _id: user._id }).then((user1) => {
           if (user1 && user?.deviceId != user1?.deviceId) {
             return res.reject(

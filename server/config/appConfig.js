@@ -164,7 +164,8 @@ let appConfig = {
   PATIENT_PRESCRIPTION_NOT_FOUND: "Patient Prescription not found",
   SUCCESS_CODE_PATIENT_PRESCRIPTION_RETRIEVAL: "Patient Prescription Retrieved Successfully",
   SUCCESS_PATIENT_PRESCRIPTION_UPDATE: "Patient Prescription Updated Successfully",
-  SUCCESS_CODE_PATIENT_PRESCRIPTION_DELETED: "Patient Prescription Deleted Successfully"
+  SUCCESS_CODE_PATIENT_PRESCRIPTION_DELETED: "Patient Prescription Deleted Successfully",
+  SUCCESS_TEMPLATE_CREATION: "Template created Successfully"
 
 };
 

@@ -5,6 +5,7 @@ const CONFIG = require("../../config/appConfig");
 const Util = require("../../utils/commonUtils");
 const moment = require("moment");
 const Admin = require("../../models/admin");
+const Prescription = require("../../models/prescription");
 const SuperAdmin = require("../../models/superAdmin");
 const Doctor = require("../../models/doctor");
 const Staff = require("../../models/staff");
@@ -775,6 +776,39 @@ class superAdminService {
             }
         });
     }
+
+    // createTemplate(req, res) {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             var templateData = req.body;           
+               
+    //             try {      
+    //                 i have prescriptionTemplate key in above  in Prescription model         templateData if my record exists in database then update that otherwise create   
+
+    //                 resolve({
+    //                     code: CONFIG.SUCCESS_CODE,
+    //                     message: CONFIG.SUCCESS_TEMPLATE_CREATION,
+    //                     data: data,
+    //                 });
+
+    //             } catch (err) {
+    //                 console.error("Database error:", err.message);
+    //                 return reject({
+    //                     code: CONFIG.ERROR_CODE,
+    //                     message: err.message,
+    //                 });
+    //             }
+
+    //         } catch (err) {
+    //             console.error("Unexpected error:", err.message);
+    //             return reject({
+    //                 code: CONFIG.ERROR_CODE,
+    //                 message: err.message,
+    //             });
+    //         }
+    //     });
+
+    // }
 
     sendEmailForgotPasswordforAdmin(req, res) {
         return new Promise(async function (resolve, reject) {

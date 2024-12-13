@@ -52,5 +52,6 @@ route.put(
 );
 route.delete("/hospital/staff/delete/:id", authCheck, superAdminRepo.deleteStaff);
 
+//route.post('/create/template',authCheck, superAdminRepo.createTemplate);
 
 module.exports = route;

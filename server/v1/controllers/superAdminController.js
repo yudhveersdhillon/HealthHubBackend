@@ -188,6 +188,17 @@ class superAdminController {
                 return res.reject(error.code, error.message);
             });
     }
+    
+    createTemplate(req, res) {
+        superAdminService
+            .createTemplate(req, res)
+            .then((result) => {
+                return res.success(result.code, result.message, result.data);
+            })
+            .catch((error) => {
+                return res.reject(error.code, error.message);
+            });
+    }
 }
 
 module.exports = superAdminController;

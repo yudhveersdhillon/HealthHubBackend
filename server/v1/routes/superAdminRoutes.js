@@ -2,7 +2,7 @@ var express = require("express");
 var route = express.Router();
 const { upload, uploadAdminImage, Storeupload } = require("../../utils/commonUtils");
 
-var authCheck = require("../../auth/jwtAuthorized");
+var authCheck = require("../../auth/superAdminjwtAuthorised");
 
 const superAdminController = require("../controllers/superAdminController");
 let superAdminRepo = new superAdminController();
@@ -11,17 +11,17 @@ let superAdminRepo = new superAdminController();
 // Admin CRUD
 
 route.post("/login", superAdminRepo.login);
-route.post("/admin/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminRegister);
+route.post("/hospital/register", uploadAdminImage.single("profileImage"), superAdminRepo.adminRegister);
 route.get("/admin/list", authCheck, superAdminRepo.getAdminList);
 
-route.get("/admin/list/:id", authCheck, superAdminRepo.getAdminbyId);
+route.get("/hospital/list/:id", authCheck, superAdminRepo.getAdminbyId);
 route.put(
-    "/admin/update/:id",
+    "/hospital/update/:id",
     authCheck,
     uploadAdminImage.single("profileImage"),
     superAdminRepo.updateAdmin
 );
-route.delete("/admin/delete/:id", authCheck, superAdminRepo.deleteAdmin);
+route.delete("/hospital/delete/:id", authCheck, superAdminRepo.deleteAdmin);
 
 // Doctor CRUD
 

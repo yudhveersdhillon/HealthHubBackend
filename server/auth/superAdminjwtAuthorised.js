@@ -31,7 +31,12 @@ module.exports = (req, res, next) => {
                             CONFIG.ERROR_CODE_UNAUTHORIZED,
                             CONFIG.DISABLED_AUTHORIZATION
                         );
-
+                    if (user.role != 'superAdmin') {
+                        return res.reject(
+                            CONFIG.ERROR_CODE_UNAUTHORIZED,
+                            CONFIG.DISABLED_AUTHORIZATION
+                        );
+                    }
                     req.user = user;
                     next();
                 });

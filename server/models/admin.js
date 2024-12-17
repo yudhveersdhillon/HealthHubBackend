@@ -42,6 +42,10 @@ const adminSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        isVerified: {
+            type: Boolean,
+            default: false
+        },
         pharmacy: {
             type: Boolean,
             default: false

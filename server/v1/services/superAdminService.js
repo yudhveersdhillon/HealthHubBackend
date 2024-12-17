@@ -261,7 +261,7 @@ class superAdminService {
 
                 await Admin.updateOne(
                     { _id: adminId },
-                    { $set: adminData },
+                    { $set: s },
                     { new: true, upsert: true }
                 );
                 const updatedAdmin = await Admin.findOne({ _id: adminId });

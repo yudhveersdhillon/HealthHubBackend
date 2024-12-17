@@ -199,11 +199,10 @@ class adminService {
                 } else {
                   console.log("File removed successfully");
                 }
-                adminData.profileImage = req.file
-                  ? `static/profileImage/${req.file.filename}`
-                  : null;
-                // Pass the uploaded data to the next middleware function
               });
+              adminData.profileImage = req.file
+                ? `static/profileImage/${req.file.filename}`
+                : null;
             } else if (req.file) {
               adminData.profileImage = req.file
                 ? `static/profileImage/${req.file.filename}`

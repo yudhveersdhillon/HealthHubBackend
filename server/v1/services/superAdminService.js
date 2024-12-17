@@ -218,7 +218,7 @@ class superAdminService {
         return new Promise(async function (resolve, reject) {
             try {
                 const adminId = req.params.id;
-                let adminData = req.body;
+                var adminData = req.body;
 
                 if (req.file) {
                     // File upload successful
@@ -230,7 +230,6 @@ class superAdminService {
                                 "../../",
                                 "public",
                                 "uploads",
-                                "profileImage",
                                 adminDetails.profileImage.replace("static/", "")
                             );
                             fs.unlink(filePath, (err) => {
@@ -239,11 +238,10 @@ class superAdminService {
                                 } else {
                                     console.log("File removed successfully");
                                 }
-                                adminData.profileImage = req.file
-                                    ? `static/profileImage/${req.file.filename}`
-                                    : null;
-                                // Pass the uploaded data to the next middleware function
                             });
+                            adminData.profileImage = req.file
+                                ? `static/profileImage/${req.file.filename}`
+                                : null;
                         } else if (req.file) {
                             adminData.profileImage = req.file
                                 ? `static/profileImage/${req.file.filename}`
@@ -251,6 +249,7 @@ class superAdminService {
                         }
                     }
                 }
+
                 const admin = await Admin.findOne({ _id: adminId });
                 //let adminInstance = new Admin(adminData);
                 if (!admin) {
@@ -781,7 +780,7 @@ class superAdminService {
     //     return new Promise(async (resolve, reject) => {
     //         try {
     //             var templateData = req.body;           
-               
+
     //             try {      
     //                 i have prescriptionTemplate key in above  in Prescription model         templateData if my record exists in database then update that otherwise create   
 

@@ -408,26 +408,24 @@ class superAdminService {
                 const limit = 10;
                 const skip = (page - 1) * limit;
                 const word = req.query.word;
-                const hospitalId = req.query.hospitalId;
-                const doctorList = await Doctor.find({
+                let query = {
                     status: { $ne: 2 },
-                    $or: [
+                };
+
+                if (word) {
+                    query.$or = [
                         { name: { $regex: new RegExp(word, "i") } },
                         { email: { $regex: new RegExp(word, "i") } },
-                    ],
-                    hospitalId: hospitalId
-                })
+                    ];
+                }
+                if (req.query.hospitalId) {
+                    query.hospitalId = req.query.hospitalId;
+                }
+                const doctorList = await Doctor.find(query)
                     .sort({ createdAt: -1 })
                     .skip(skip)
                     .limit(limit).populate('hospitalId');
-                const doctorCount = await Doctor.countDocuments({
-                    status: { $ne: 2 },
-                    $or: [
-                        { name: { $regex: new RegExp(word, "i") } },
-                        { email: { $regex: new RegExp(word, "i") } },
-                    ],
-                    hospitalId: hospitalId
-                })
+                const doctorCount = await Doctor.countDocuments(query);
 
                 resolve({
                     code: CONFIG.SUCCESS_CODE,

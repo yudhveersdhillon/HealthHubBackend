@@ -424,7 +424,8 @@ class superAdminService {
                 const doctorList = await Doctor.find(query)
                     .sort({ createdAt: -1 })
                     .skip(skip)
-                    .limit(limit).populate('hospitalId');
+                    .limit(limit).populate('hospitalId', 'name address email');
+                    ;
                 const doctorCount = await Doctor.countDocuments(query);
 
                 resolve({

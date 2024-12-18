@@ -13,7 +13,7 @@ let superAdminRepo = new superAdminController();
 route.post("/login", superAdminRepo.login);
 route.post("/hospital/register", authCheck, uploadAdminImage.single("profileImage"), superAdminRepo.adminRegister);
 route.get("/admin/list", authCheck, superAdminRepo.getAdminList);
-
+route.get("/hospital/all/list", authCheck, superAdminRepo.getAllHospitalList);
 route.get("/hospital/list/:id", authCheck, superAdminRepo.getAdminbyId);
 route.put(
     "/hospital/update/:id",

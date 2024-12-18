@@ -35,6 +35,16 @@ class superAdminController {
                 return res.reject(error.code, error.message);
             });
     }
+    getAllHospitalList(req, res) {
+        superAdminService
+            .getAllHospitalList(req, res)
+            .then((result) => {
+                return res.success(result.code, result.message, result.data);
+            })
+            .catch((error) => {
+                return res.reject(error.code, error.message);
+            });
+    }
     getAdminbyId(req, res) {
         superAdminService
             .getAdminById(req, res)
@@ -188,7 +198,7 @@ class superAdminController {
                 return res.reject(error.code, error.message);
             });
     }
-    
+
     createTemplate(req, res) {
         superAdminService
             .createTemplate(req, res)

@@ -128,6 +128,34 @@ class superAdminService {
         });
     }
 
+    getAllHospitalList(req, res) {
+        return new Promise(async function (resolve, reject) {
+            try {
+                const adminList = await Admin.find({
+                    status: { $ne: 2 }
+                }).select('_id name');
+
+                if (!adminList.length) {
+                    return reject({
+                        code: CONFIG.ERROR_CODE,
+                        message: CONFIG.ADMIN_NOT_FOUND,
+                    });
+                }
+
+                resolve({
+                    code: CONFIG.SUCCESS_CODE,
+                    message: CONFIG.SUCCESS_CODE_ADMIN_LIST_RETRIEVAL,
+                    data: adminList
+                });
+            } catch (error) {
+                reject({
+                    code: CONFIG.ERROR_CODE,
+                    message: error.message,
+                });
+            }
+        });
+    }
+
 
     getAdminList(req, res) {
         return new Promise(async function (resolve, reject) {

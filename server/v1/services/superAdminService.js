@@ -165,7 +165,12 @@ class superAdminService {
                 const skip = (page - 1) * limit;
                 const word = req.query.word;
                 const adminList = await Admin.find({
-                    status: { $ne: 2 }
+                    status: { $ne: 2 },
+                    $or: [
+                        { name: { $regex: new RegExp(word, "i") } },
+                        { email: { $regex: new RegExp(word, "i") } },
+                        { contactNumber: { $regex: new RegExp(word, "i") } },
+                    ],
                 }).sort({ createdAt: -1 })
                     .skip(skip)
                     .limit(limit);

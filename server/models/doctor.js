@@ -35,6 +35,9 @@ const doctorSchema = new mongoose.Schema(
     profileImage: {
       type: String
     },
+    doctorSign: {
+      type: String
+    },
     department: {
       type: String,
       // The department in the hospital (e.g., Surgery, Pediatrics)

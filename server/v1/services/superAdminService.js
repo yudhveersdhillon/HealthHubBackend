@@ -343,12 +343,23 @@ class superAdminService {
         return new Promise(async (resolve, reject) => {
             try {
                 var doctorData = req.body;
-                if (req.file) {
-                    // File upload successful
-                    doctorData.profileImage = `static/profileImage/${req.file.filename}`;
-                } else {
-                    console.log("No file uploaded");
+
+                if (req.files) {
+                    const profileImage = req.files["profileImage"]
+                        ? `static/profileImage/${req.file.filename}`
+                        : null;
+                    const doctorSign = req.files["doctorSign"]
+                        ? `static/doctorSign/${req.file.filename}`
+                        : null;
+                    doctorData.profileImage = profileImage;
+                    doctorData.doctorSign = doctorSign;
                 }
+                // if (req.file) {
+                //     // File upload successful
+                //     doctorData.profileImage = `static/profileImage/${req.file.filename}`;
+                // } else {
+                //     console.log("No file uploaded");
+                // }
                 if (doctorData.email && !Util.isValidEmail(doctorData.email)) {
                     return reject({
                         code: CONFIG.ERROR_CODE,
@@ -501,27 +512,95 @@ class superAdminService {
                     });
                 }
 
-                if (req.file) {
-                    // File upload successful
-                    if (typeof doctor.profileImage === 'string' && doctor.profileImage.includes('static/profileImage/')) {
-                        const filePath = path.join(
-                            __dirname,
-                            "../../",
-                            "public",
-                            "uploads",
-                            "profileImage",
-                            doctor.profileImage.replace("static/", "")
-                        );
-                        try {
-                            await fs.promises.unlink(filePath);
-                            console.log("Old profile image removed successfully.");
-                        } catch (err) {
-                            console.error("Error removing old file:", err.message);
+                // if (req.file) {
+                //     // File upload successful
+                //     if (typeof doctor.profileImage === 'string' && doctor.profileImage.includes('static/profileImage/')) {
+                //         const filePath = path.join(
+                //             __dirname,
+                //             "../../",
+                //             "public",
+                //             "uploads",
+                //             "profileImage",
+                //             doctor.profileImage.replace("static/", "")
+                //         );
+                //         try {
+                //             await fs.promises.unlink(filePath);
+                //             console.log("Old profile image removed successfully.");
+                //         } catch (err) {
+                //             console.error("Error removing old file:", err.message);
+                //         }
+                //     }
+
+                //     // Update the new profile image path
+                //     doctorData.profileImage = `static/profileImage/${req.file.filename}`;
+                // }
+
+                if (req.files) {
+                    const profileImage = req.files["profileImage"]
+                        ? `static/profileImage/${req.file.filename}`
+                        : null;
+                    const doctorSign = req.files["doctorSign"]
+                        ? `static/doctorSign/${req.file.filename}`
+                        : null;
+
+                    // Remove existing image files if new ones are provided
+                    if (profileImage) {
+                        doctorData.profileImage = profileImage;
+                        let iurl = doctor.profileImage;
+                        if (doctor.profileImage != null && doctor.profileImage != "") {
+                            iurl = doctor.profileImage.replace("static/", "");
                         }
+                        if (iurl != null && iurl != "") {
+
+
+                            const filePath = path.join(
+                                __dirname,
+                                "../../",
+                                "public",
+                                "uploads",
+                                iurl
+                            );
+                            fs.unlink(filePath, (err) => {
+                                if (err) {
+                                    console.error("Error removing old file:", err);
+                                } else {
+                                    console.log("Image file removed successfully");
+                                }
+
+                            });
+
+                        }
+
                     }
 
-                    // Update the new profile image path
-                    doctorData.profileImage = `static/profileImage/${req.file.filename}`;
+                    if (doctorSign) {
+                        doctorData.doctorSign = doctorSign;
+                        let ilurl = doctor.doctorSign;
+                        if (doctor.doctorSign != null && doctor.doctorSign != "") {
+                            ilurl = doctor.doctorSign.replace("static/", "");
+                        }
+                        if (ilurl != null && ilurl != "") {
+
+
+                            const filePath = path.join(
+                                __dirname,
+                                "../../",
+                                "public",
+                                "uploads",
+                                ilurl
+                            );
+                            fs.unlink(filePath, (err) => {
+                                if (err) {
+                                    console.error("Error removing old file:", err);
+                                } else {
+                                    console.log("logo image file removed successfully");
+                                }
+
+                            });
+                        }
+
+                    }
+
                 }
 
                 const updatedDoctor = await Doctor.findOneAndUpdate(
@@ -656,7 +735,7 @@ class superAdminService {
                     .sort({ createdAt: -1 })
                     .skip(skip)
                     .limit(limit).populate('hospitalId');
-                    
+
                 const staffCount = await Staff.countDocuments(query);
 
                 resolve({

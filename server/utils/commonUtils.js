@@ -115,6 +115,32 @@ const managerAndStoreStorage = multer.diskStorage({
 const managerAndStoreupload = multer({ storage: managerAndStoreStorage });
 
 
+const DoctorImagesStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    console.log("file:", file);
+    if (file.fieldname === "profileImage") {
+      let newpath = path.join("server", "public", "uploads", "profileImage");
+      console.log("newpath:", newpath);
+      cb(null, newpath); // Set destination for profile images
+    } else if (file.fieldname === "doctorSign") {
+      let newpath = path.join("server", "public", "uploads", "doctorSign");
+      console.log("newpath:", newpath);
+      cb(null, newpath); // Set destination for doctor signatures
+    } else {
+      console.log("error multer Invalid field name:", file.fieldname);
+      cb(new Error("Invalid field name"));
+    }
+  },
+  filename: function (req, file, cb) {
+    console.log("file:", file);
+    let newname = Date.now() + "-" + file.originalname;
+    console.log("newname:", newname);
+    cb(null, newname); // Use unique filenames
+  },
+});
+
+const uploadDoctorImages = multer({ storage: DoctorImagesStorage });
+
 
 module.exports = {
   isValidEmail,
@@ -123,6 +149,7 @@ module.exports = {
   idValidObjectId,
   upload,
   uploadAdminImage,
+  uploadDoctorImages,
   Storeupload,
   managerAndStoreupload
 };

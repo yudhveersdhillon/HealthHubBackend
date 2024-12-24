@@ -1,6 +1,6 @@
 var express = require("express");
 var route = express.Router();
-const { upload, uploadAdminImage, Storeupload } = require("../../utils/commonUtils");
+const { upload, uploadAdminImage, uploadDoctorImages, Storeupload } = require("../../utils/commonUtils");
 
 var authCheck = require("../../auth/superAdminjwtAuthorised");
 
@@ -26,7 +26,10 @@ route.delete("/hospital/delete/:id", authCheck, superAdminRepo.deleteAdmin);
 // Doctor CRUD
 
 
-route.post("/hospital/doctor/register", authCheck, uploadAdminImage.single("profileImage"), superAdminRepo.SuperadminDoctorRegister);
+route.post("/hospital/doctor/register", authCheck, uploadDoctorImages.fields([
+    { name: "profileImage", maxCount: 1 },
+    { name: "doctorSign", maxCount: 1 },
+]), superAdminRepo.SuperadminDoctorRegister);
 route.get("/hospital/alldoctor/list", authCheck, superAdminRepo.getAllDoctorList);
 route.get("/hospital/doctor/list/:id", authCheck, superAdminRepo.getDoctorbyId);
 route.put(

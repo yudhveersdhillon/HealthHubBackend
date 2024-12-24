@@ -30,7 +30,7 @@ const staffSchema = new mongoose.Schema(
     phone: {
       type: String,
     },
-  
+
     otp: {
       type: Number,
       default: 0,
@@ -48,10 +48,6 @@ const staffSchema = new mongoose.Schema(
       required: function () {
         return this.role !== 'receptionist';  // Department is required for all roles except receptionist
       },
-    },
-    adminId: {
-      type: Schema.Types.ObjectId,
-      ref: "Admin",  // Reference to the admin who registered the staff member
     },
     status: {
       type: Number,

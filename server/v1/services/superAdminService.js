@@ -612,6 +612,7 @@ class superAdminService {
                     }
 
                 }
+                
                 console.log("Step 4");
 
                 const updatedDoctor = await Doctor.findOneAndUpdate(

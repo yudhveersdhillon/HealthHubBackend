@@ -503,7 +503,7 @@ class superAdminService {
             try {
                 const doctorId = req.params.id;
                 let doctorData = req.body;
-console.log("step 1");
+                console.log("step 1");
 
                 const doctor = await Doctor.findOne({ _id: doctorId });
                 if (!doctor) {
@@ -540,17 +540,19 @@ console.log("step 1");
                 console.log("step 3");
 
                 if (req.files) {
-                    console.log(req.files,"req.files");
-                    
+
                     const profileImage = req.files["profileImage"]
                         ? `static/profileImage/${req.file.filename}`
                         : null;
                     const doctorSign = req.files["doctorSign"]
                         ? `static/doctorSign/${req.file.filename}`
                         : null;
+                    console.log(doctorSign, "doctorSign");
 
                     // Remove existing image files if new ones are provided
                     if (profileImage) {
+                        console.log("stpep 888");
+
                         doctorData.profileImage = profileImage;
                         let iurl = doctor.profileImage;
                         if (doctor.profileImage != null && doctor.profileImage != "") {
@@ -580,6 +582,8 @@ console.log("step 1");
                     }
 
                     if (doctorSign) {
+                        console.log("step doctor sign");
+
                         doctorData.doctorSign = doctorSign;
                         let ilurl = doctor.doctorSign;
                         if (doctor.doctorSign != null && doctor.doctorSign != "") {
@@ -608,7 +612,7 @@ console.log("step 1");
                     }
 
                 }
-console.log("Step 4");
+                console.log("Step 4");
 
                 const updatedDoctor = await Doctor.findOneAndUpdate(
                     { _id: doctorId },

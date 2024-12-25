@@ -542,10 +542,10 @@ class superAdminService {
                 if (req.files) {
 
                     const profileImage = req.files["profileImage"]
-                        ? `static/profileImage/${req.file.filename}`
+                        ? `static/profileImage/${req.files["profileImage"].filename}`
                         : null;
                     const doctorSign = req.files["doctorSign"]
-                        ? `static/doctorSign/${req.file.filename}`
+                        ? `static/doctorSign/${req.files["doctorSign"].filename}`
                         : null;
                     console.log(doctorSign, "doctorSign");
 
@@ -612,7 +612,7 @@ class superAdminService {
                     }
 
                 }
-                
+
                 console.log("Step 4");
 
                 const updatedDoctor = await Doctor.findOneAndUpdate(

@@ -35,7 +35,10 @@ route.get("/hospital/doctor/list/:id", authCheck, superAdminRepo.getDoctorbyId);
 route.put(
     "/hospital/doctor/update/:id",
     authCheck,
-    uploadAdminImage.single("profileImage"),
+    uploadDoctorImages.fields([
+        { name: "profileImage", maxCount: 1 },
+        { name: "doctorSign", maxCount: 1 },
+    ]),
     superAdminRepo.updateDoctor
 );
 route.delete("/hospital/doctor/delete/:id", authCheck, superAdminRepo.deleteDoctor);

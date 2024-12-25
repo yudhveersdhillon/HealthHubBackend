@@ -595,7 +595,7 @@ class superAdminService {
                                 if (err) {
                                     console.error("Error removing old file:", err);
                                 } else {
-                                    console.log("logo image file removed successfully");
+                                    console.log("doctor sign image file removed successfully");
                                 }
 
                             });

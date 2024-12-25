@@ -503,6 +503,7 @@ class superAdminService {
             try {
                 const doctorId = req.params.id;
                 let doctorData = req.body;
+console.log("step 1");
 
                 const doctor = await Doctor.findOne({ _id: doctorId });
                 if (!doctor) {
@@ -511,6 +512,8 @@ class superAdminService {
                         message: CONFIG.NOT_FOUND_DOCTOR,
                     });
                 }
+                console.log("step 2");
+
 
                 // if (req.file) {
                 //     // File upload successful
@@ -534,8 +537,11 @@ class superAdminService {
                 //     // Update the new profile image path
                 //     doctorData.profileImage = `static/profileImage/${req.file.filename}`;
                 // }
+                console.log("step 3");
 
                 if (req.files) {
+                    console.log(req.files,"req.files");
+                    
                     const profileImage = req.files["profileImage"]
                         ? `static/profileImage/${req.file.filename}`
                         : null;
@@ -602,12 +608,14 @@ class superAdminService {
                     }
 
                 }
+console.log("Step 4");
 
                 const updatedDoctor = await Doctor.findOneAndUpdate(
                     { _id: doctorId },
                     { $set: doctorData },
                     { new: true }
                 );
+                console.log("Step 5");
 
                 resolve({
                     code: CONFIG.SUCCESS_CODE,

@@ -540,6 +540,7 @@ class superAdminService {
                 console.log("step 3");
 
                 if (req.files) {
+                    console.log(req.files["doctorSign"], "req.files");
 
                     const profileImage = req.files["profileImage"]
                         ? `static/profileImage/${req.files["profileImage"].filename}`

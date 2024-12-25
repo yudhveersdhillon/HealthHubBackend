@@ -346,20 +346,15 @@ class superAdminService {
 
                 if (req.files) {
                     const profileImage = req.files["profileImage"]
-                        ? `static/profileImage/${req.file.filename}`
+                        ? `static/profileImage/${req.files["profileImage"][0].filename}`
                         : null;
                     const doctorSign = req.files["doctorSign"]
-                        ? `static/doctorSign/${req.file.filename}`
+                        ? `static/doctorSign/${req.files["doctorSign"][0].filename}`
                         : null;
                     doctorData.profileImage = profileImage;
                     doctorData.doctorSign = doctorSign;
                 }
-                // if (req.file) {
-                //     // File upload successful
-                //     doctorData.profileImage = `static/profileImage/${req.file.filename}`;
-                // } else {
-                //     console.log("No file uploaded");
-                // }
+                
                 if (doctorData.email && !Util.isValidEmail(doctorData.email)) {
                     return reject({
                         code: CONFIG.ERROR_CODE,
@@ -537,22 +532,19 @@ class superAdminService {
                 //     // Update the new profile image path
                 //     doctorData.profileImage = `static/profileImage/${req.file.filename}`;
                 // }
-                console.log("step 3");
 
                 if (req.files) {
-                    console.log(req.files["doctorSign"], "req.files");
 
                     const profileImage = req.files["profileImage"]
-                        ? `static/profileImage/${req.files["profileImage"].filename}`
+                        ? `static/profileImage/${req.files["profileImage"][0].filename}`
                         : null;
                     const doctorSign = req.files["doctorSign"]
-                        ? `static/doctorSign/${req.files["doctorSign"].filename}`
+                        ? `static/doctorSign/${req.files["doctorSign"][0].filename}`
                         : null;
                     console.log(doctorSign, "doctorSign");
 
                     // Remove existing image files if new ones are provided
                     if (profileImage) {
-                        console.log("stpep 888");
 
                         doctorData.profileImage = profileImage;
                         let iurl = doctor.profileImage;
@@ -583,7 +575,6 @@ class superAdminService {
                     }
 
                     if (doctorSign) {
-                        console.log("step doctor sign");
 
                         doctorData.doctorSign = doctorSign;
                         let ilurl = doctor.doctorSign;
@@ -614,14 +605,12 @@ class superAdminService {
 
                 }
 
-                console.log("Step 4");
 
                 const updatedDoctor = await Doctor.findOneAndUpdate(
                     { _id: doctorId },
                     { $set: doctorData },
                     { new: true }
                 );
-                console.log("Step 5");
 
                 resolve({
                     code: CONFIG.SUCCESS_CODE,
